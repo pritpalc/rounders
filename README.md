@@ -1,6 +1,6 @@
 # CPSC 436I
 #### Team X - Pritpal Chauhan, Manan Mehta, Ruben Gonzalez, Jie Lu, Jason Smith
-#### Hosted on [rounders.io](rounders.io)
+#### Hosted on [rounders.io](http://rounders.io/)
 
 ## Project Description
 Our project is a musical competition web app where users sign up and create profiles about themselves and their musical preferences. Users get the opportunity to accept and send out challenges to other users to face off in singing competitions with specific song choices. In each face off, other users can vote on the winner. 
@@ -33,7 +33,7 @@ Depending on time constraints we can add additional functionality for different 
 * Extension to other challenge formats such as playing musical instruments
 
 ## Prototypes
-
+![Prototypes](./prototypes.jpg)
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
