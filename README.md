@@ -1,3 +1,41 @@
+# CPSC 436I
+#### Team X - Pritpal Chauhan, Manan Mehta, Ruben Gonzalez, Jie Lu, Jason Smith
+#### Hosted on rounders.io
+
+## Project Description
+Our project is a musical competition web app where users sign up and create profiles about themselves and their musical preferences. Users get the opportunity to accept and send out challenges to other users to face off in singing competitions with specific song choices. In each face off, other users can vote on the winner. 
+
+Users will upload videos of themselves performing songs which we will then store, alongside match up information, rankings, and profile items (challenge history, personal info, song preferences, etc.).
+
+Depending on time constraints we can add additional functionality for different leader boards and we can extend the platform to include playing music too. If we don't have enough time, we can reduce features on the profile page, keeping the core functionality of challenges and voting.
+
+## Project Task Requirements
+### Minimal (definitely complete)
+* User authentication (log in, sign up, onboarding)
+  * Create sign up and auth endpoints that return a token
+  * Set up Redux to handle global auth management
+  * Create UI screens using React with simple forms
+* Ability to create challenges with song preferences
+  * Create a challenges endpoint that takes in 3 song choices and randomly matches a user with the challenge
+  * Create a form to submit a challenge request with the ability to search and choose 3 song choices
+  * Create a notifications endpoint to send the matched user a notification and another endpoint to receive the chosen song
+  * Create user notifications to receive a challenge and the ability to pick one of the 3 given song choices
+* Ability to upload challenge videos
+* Voting abilities for all users to determine winners
+
+### Standard (most likely complete)
+* Basic profile with features to view how many wins, challenge history, and choose song preferences
+* Ability to view a list of challenges and accept them
+* Ability to follow singers and view profiles
+
+### Stretch
+* Ability to counter challenges with additional song preferences
+* Extension to other challenge formats such as playing musical instruments
+
+## Prototypes
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
