@@ -9,4 +9,5 @@
   font-style: italic;
   color: white;
   font-weight: bold;
+  z-index: 10;
 }

@@ -1,10 +1,10 @@
 #footer {
   background-color: #cdcdcd;
   height: 3rem;
-
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 1000;
 }
 
 .social_icon {

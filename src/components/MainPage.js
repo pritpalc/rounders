@@ -5,11 +5,10 @@ import singer1 from '../imgs/singer1.png';
 import singer2 from '../imgs/singer2.png';
 import singer3 from '../imgs/singer3.png';
 import singer4 from '../imgs/singer4.png';
-import Footer from './Footer';
 
 
 export default class MainPage extends React.Component {
-  
+
   render() {
     return (
       <div>
@@ -31,7 +30,6 @@ export default class MainPage extends React.Component {
             <p>Over <span className="redText">$50,000</span> distributed in prizes</p>
           </div>
         </div>
-        <Footer />
       </div>);
   }
 }
