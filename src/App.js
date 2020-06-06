@@ -39,6 +39,9 @@ const theme = createMuiTheme({
     h6: {
       fontSize: "1.5rem"
     },
+    subtitle1: {
+      fontSize: "1.4rem"
+    },
     button: {
       fontWeight: "600",
       letterSpacing: "2.83px",

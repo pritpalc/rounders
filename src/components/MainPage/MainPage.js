@@ -1,4 +1,6 @@
 import React from 'react';
+import { Typography } from '@material-ui/core';
+// Assets
 import singer1 from './assets/imgs/singer1.png';
 import singer2 from './assets/imgs/singer2.png';
 import singer3 from './assets/imgs/singer3.png';
@@ -14,8 +16,8 @@ export default class MainPage extends React.Component {
       <div id="main-page-wrapper">
         <div>
           <div>
-            <p id="title"> Are you a musician? </p>
-            <p id="title2">Let your talent shine. Compete. Earn money.</p>
+            <Typography id="title" variant="h1"> Are you a musician? </Typography>
+            <Typography id="title2" variant="h5"> Let your talent shine. Compete. Earn money.</Typography>
           </div>
           <div id="photos">
             <img src={singer1} alt=""></img>
@@ -24,9 +26,9 @@ export default class MainPage extends React.Component {
             <img src={singer4} alt=""></img>
           </div>
           <div className="info">
-            <p><span className="redText">36,845</span> rounders have been active today</p>
-            <p><span className="redText">2,874</span> challenges completed</p>
-            <p>Over <span className="redText">$50,000</span> distributed in prizes</p>
+            <Typography component="p" variant="subtitle1"><Typography component="span" variant="subtitle1" className="redText">36,845</Typography> rounders have been active today</Typography>
+            <Typography component="p" variant="subtitle1"><Typography component="span" variant="subtitle1" className="redText">2,874</Typography> challenges completed</Typography>
+            <Typography component="p" variant="subtitle1">Over <Typography component="span" variant="subtitle1" className="redText">$50,000</Typography> distributed in prizes</Typography>
           </div>
         </div>
       </div>);
