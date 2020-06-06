@@ -1,15 +1,13 @@
 import React from 'react';
-import NavBar from './NavBar';
-import './MainPage.css';
-import singer1 from '../imgs/singer1.png';
-import singer2 from '../imgs/singer2.png';
-import singer3 from '../imgs/singer3.png';
-import singer4 from '../imgs/singer4.png';
-import Footer from './Footer';
+import NavBar from '../components/Navbar';
+import './styles.css';
+import singer1 from './assets/images/singer1.png';
+import singer2 from './assets/images/singer2.png';
+import singer3 from './assets/images/singer3.png';
+import singer4 from './assets/images/singer4.png';
+import Footer from '../components/Footer';
 
-
-export default class MainPage extends React.Component {
-  
+class MainPage extends React.Component {
   render() {
     return (
       <div>
@@ -32,6 +30,9 @@ export default class MainPage extends React.Component {
           </div>
         </div>
         <Footer />
-      </div>);
+      </div>
+    );
   }
 }
+
+export default MainPage;
