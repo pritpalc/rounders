@@ -1,10 +1,15 @@
 #footer {
   background-color: #cdcdcd;
-  height: 3rem;
-
-  position: absolute;
+  height: 3.5rem;
+  padding-left: 1rem;
+  box-sizing: border-box;
+  position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .social_icon {

@@ -1,0 +1,78 @@
+#create-challenge-wrapper {
+  box-sizing: border-box;
+  min-height: 70vh;
+  min-width: var(--song-filter-input-width) !important;
+  padding: 2rem 3rem;
+  border: 1px solid var(--primary);
+  border-radius: var(--card-border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#create-challenge-header {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+#songs-chosen-list {
+  list-style: none !important;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 !important;
+}
+
+#songs-chosen-list > li {
+  padding: 0.2rem 0;
+  text-align: left;
+  color: var(--primary);
+}
+
+/* SONG FILTER TEXT INPUT */
+.song-filter-root {
+  width: var(--song-filter-input-width) !important;
+}
+.song-filter-input {
+  box-sizing: border-box !important;
+  height: var(--song-filter-input-height) !important;
+  width: 100% !important;
+  padding: 1rem !important;
+}
+
+.disabled-input {
+  color: green !important;
+}
+
+/* MENU SHOWING SONG LIST AFTER FILTERING USING TEXT INPUT */
+
+#song-filter-wrapper {
+  position: relative;
+  width: var(--song-filter-input-width) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#song-menu {
+  box-sizing: border-box;
+  width: var(--song-filter-input-width) !important;
+  border: 1px solid var(--soft-grey);
+  border-radius: 4px;
+  position: absolute;
+  top: calc(var(--song-filter-input-height) + 0.1rem) !important;
+  z-index: 1 !important;
+  background-color: white;
+  margin-top: 0.45rem;
+}
+
+#song-menu > li {
+  background-color: white;
+}
+
+#song-menu > li:hover {
+  background-color: var(--soft-primary);
+}
+
+.start-challenge-button {
+  margin-top: 3rem !important;
+}
