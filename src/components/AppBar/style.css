@@ -1,0 +1,12 @@
+#app-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background-color: var(--primary);
+  font-size: 2rem;
+  padding: 1rem;
+  font-style: italic;
+  color: white;
+  font-weight: bold;
+}

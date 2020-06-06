@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 // Components
 import CreateChallenge from './components/CreateChallenge';
+import AppBar from './components/AppBar';
 // Style
 import './App.css';
 
@@ -53,6 +54,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div id="App">
+        <AppBar />
         <CreateChallenge />
       </div>
     </ThemeProvider>

@@ -1,6 +1,16 @@
+:root {
+  --song-filter-input-height: 3rem;
+  --song-filter-input-width: 500px;
+  --soft-grey: rgba(0, 0, 0, 0.23);
+  --primary: #6202EE;
+  --soft-primary: rgba(96, 2, 237, 0.62);
+  --card-border-radius: 8px;
+}
+
 #App {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
