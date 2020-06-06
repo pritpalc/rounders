@@ -1,0 +1,45 @@
+#background {
+  background-color: #2f2fa2;
+  height: 3rem;
+}
+
+.span_spaceinbetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+.span_spacearound {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#icon {
+  font-family: Sansita One;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 38px;
+  line-height: 20px;
+  margin: 1rem;
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -1.5px;
+
+  color: #FFFFFF;
+}
+
+.btn {
+  background-color: white;
+  font-family: Hiragino Sans;
+  color: #ffffff;
+  font-size: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  align-items: center;
+  margin: 0.3rem;
+  margin-right: 0.5rem;
+  border-color: #F64C72;;
+  border-width: 3px;
+  background-color: #2f2fa2;
+}
