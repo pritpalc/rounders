@@ -1,18 +1,17 @@
 import React from 'react';
-import NavBar from './NavBar';
+import singer1 from './assets/imgs/singer1.png';
+import singer2 from './assets/imgs/singer2.png';
+import singer3 from './assets/imgs/singer3.png';
+import singer4 from './assets/imgs/singer4.png';
+// Style
 import './MainPage.css';
-import singer1 from '../imgs/singer1.png';
-import singer2 from '../imgs/singer2.png';
-import singer3 from '../imgs/singer3.png';
-import singer4 from '../imgs/singer4.png';
 
 
 export default class MainPage extends React.Component {
 
   render() {
     return (
-      <div>
-        <NavBar />
+      <div id="main-page-wrapper">
         <div>
           <div>
             <p id="title"> Are you a musician? </p>

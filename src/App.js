@@ -6,10 +6,10 @@ import {
 // Components
 import CreateChallenge from './components/CreateChallenge';
 import AppBar from './components/AppBar';
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
 // Style
 import './App.css';
-import MainPage from './components/MainPage';
+import MainPage from './components/MainPage/MainPage';
 
 const theme = createMuiTheme({
   palette: {
