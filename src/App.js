@@ -6,8 +6,10 @@ import {
 // Components
 import CreateChallenge from './components/CreateChallenge';
 import AppBar from './components/AppBar';
+import Footer from './components/Footer';
 // Style
 import './App.css';
+import MainPage from './components/MainPage';
 
 const theme = createMuiTheme({
   palette: {
@@ -53,10 +55,12 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <AppBar />
+      <MainPage></MainPage>
       <div id="App">
-        <AppBar />
         <CreateChallenge />
       </div>
+      <Footer />
     </ThemeProvider>
   );
 }
