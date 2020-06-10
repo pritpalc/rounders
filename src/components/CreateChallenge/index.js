@@ -18,6 +18,9 @@ const FAKE_SONG_LIST = [
   "Clint Mansell - Lux Aeterna"
 ];
 
+const LastFM = require('last-fm')
+const lastfm = new LastFM('f0b8f4b9b43994923817c7c8dffc9b27', { userAgent: 'MyApp/1.0.0 (http://localhost:3000/)' })
+
 class CreateChallenge extends React.Component {
 
   constructor() {
@@ -32,13 +35,17 @@ class CreateChallenge extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevInput) {
-    if (prevInput.input !== this.state.input) {
-      let regex = new RegExp(`${this.state.input}`, 'ig');
+    if (prevInput.input !== this.state.input && this.state.input !== '') {
       let songOptions = [];
-      FAKE_SONG_LIST.forEach(s => {
-        s.match(regex) && songOptions.push(s);
-      });
-      this.setState({ songOptions });
+      lastfm.search({ q: `${this.state.input}` }, (err, data) => {
+        if (err) console.error(err)
+        else {
+          for (var d in data.result.tracks) {
+            songOptions.push(data.result.tracks[d].artistName + ' - ' +  data.result.tracks[d].name);
+          }
+          this.setState({ songOptions });
+        }
+      })
     }
   }
 
