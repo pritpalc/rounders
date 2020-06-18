@@ -1,13 +1,12 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 // Assets
-import singer1 from './assets/imgs/singer1.png';
-import singer2 from './assets/imgs/singer2.png';
-import singer3 from './assets/imgs/singer3.png';
-import singer4 from './assets/imgs/singer4.png';
+import singer1 from './assets/images/singer1.png';
+import singer2 from './assets/images/singer2.png';
+import singer3 from './assets/images/singer3.png';
+import singer4 from './assets/images/singer4.png';
 // Style
-import './MainPage.css';
-
+import './style.css';
 
 export default class MainPage extends React.Component {
 

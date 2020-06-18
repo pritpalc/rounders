@@ -4,12 +4,12 @@ import {
   createMuiTheme
 } from '@material-ui/core';
 // Components
-import CreateChallenge from './components/CreateChallenge';
+import MainPage from './scenes/MainPage';
+import CreateChallenge from './scenes/CreateChallenge';
 import AppBar from './components/AppBar';
-import Footer from './components/Footer/Footer';
+import Footer from './components/Footer';
 // Style
 import './App.css';
-import MainPage from './components/MainPage/MainPage';
 
 const theme = createMuiTheme({
   palette: {
