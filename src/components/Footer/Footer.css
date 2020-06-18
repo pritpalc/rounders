@@ -1,15 +1,15 @@
 #footer {
   background-color: #cdcdcd;
-  height: 3.5rem;
+  height: var(--footer-height);
   padding-left: 1rem;
   box-sizing: border-box;
-  position: fixed;
-  bottom: 0;
   width: 100%;
-  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  /* So footer is at the bottom of the app */
+  position: absolute;
+  bottom: 0;
 }
 
 .social_icon {
