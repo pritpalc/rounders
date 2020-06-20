@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { challengeActions } from '../../services/challenges/actions';
 
 const LastFM = require('last-fm')
-const LAST_FM_API_KEY = process.env.LAST_FM_API_KEY;
+const LAST_FM_API_KEY = process.env.REACT_APP_LAST_FM_API_KEY;
 const lastfm = new LastFM(LAST_FM_API_KEY, { userAgent: 'MyApp/1.0.0 (http://localhost:3000/)' })
 
 const FAKE_SONG_LIST = [
@@ -43,7 +43,7 @@ class CreateChallenge extends React.Component {
       lastfm.search({ q: `${this.state.input}` }, (err, data) => {
         // Add Fake Data if non 200 response
         if (err) {
-          console.error(err)
+          // console.error(err)
           for (var s in FAKE_SONG_LIST) {
             songOptions.push(FAKE_SONG_LIST[s]);
           }
