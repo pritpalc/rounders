@@ -10,6 +10,10 @@ import './style.css';
 import { connect } from 'react-redux';
 import { challengeActions } from '../../services/challenges/actions';
 
+const LastFM = require('last-fm')
+const LAST_FM_API_KEY = process.env.LAST_FM_API_KEY;
+const lastfm = new LastFM(LAST_FM_API_KEY, { userAgent: 'MyApp/1.0.0 (http://localhost:3000/)' })
+
 const FAKE_SONG_LIST = [
   "Beyonce - Formation",
   "Megan Thee Stallion - Savage",
@@ -19,9 +23,6 @@ const FAKE_SONG_LIST = [
   "Rihanna -Umbrella",
   "Clint Mansell - Lux Aeterna"
 ];
-
-const LastFM = require('last-fm')
-const lastfm = new LastFM('f0b8f4b9b43994923817c7c8dffc9b27', { userAgent: 'MyApp/1.0.0 (http://localhost:3000/)' })
 
 class CreateChallenge extends React.Component {
 
@@ -40,7 +41,14 @@ class CreateChallenge extends React.Component {
     if (prevInput.input !== this.state.input && this.state.input !== '') {
       let songOptions = [];
       lastfm.search({ q: `${this.state.input}` }, (err, data) => {
-        if (err) console.error(err)
+        // Add Fake Data if non 200 response
+        if (err) {
+          console.error(err)
+          for (var s in FAKE_SONG_LIST) {
+            songOptions.push(FAKE_SONG_LIST[s]);
+          }
+          this.setState({ songOptions });
+        }
         else {
           for (var d in data.result.tracks) {
             songOptions.push(data.result.tracks[d].artistName + ' - ' +  data.result.tracks[d].name);
