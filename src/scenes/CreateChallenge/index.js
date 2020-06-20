@@ -7,6 +7,8 @@ import {
 } from '@material-ui/core';
 // Style
 import './style.css';
+import { connect } from 'react-redux';
+import { challengeActions } from '../../services/challenges/actions';
 
 const FAKE_SONG_LIST = [
   "Beyonce - Formation",
@@ -142,7 +144,9 @@ class CreateChallenge extends React.Component {
               if (this.state.songsChosen.length !== 3) {
                 this.setState({ inputError: "Please choose 3 songs to start a challenge" });
               } else {
-                window.alert(`Creating your challenge with your choices: ${this.state.songsChosen.join(', ')}`)
+                window.alert(`Creating your challenge with your choices: ${this.state.songsChosen.join(', ')}`);
+                this.props.getChallenges(this.state.songsChosen);
+                this.props.history.push('/challenge/list');
               }
             }}
           >
@@ -154,4 +158,8 @@ class CreateChallenge extends React.Component {
   }
 };
 
-export default CreateChallenge;
+const mapDispatchToProps = {
+  getChallenges: challengeActions.getChallenges
+}
+
+export default connect(undefined, mapDispatchToProps)(CreateChallenge);
