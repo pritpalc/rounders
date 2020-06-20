@@ -1,5 +1,11 @@
 import React from 'react';
 import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom';
+import {
   ThemeProvider,
   createMuiTheme
 } from '@material-ui/core';
@@ -58,13 +64,18 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <AppBar />
-      <MainPage></MainPage>
-      <div id="App">
-        <CreateChallenge />
-      </div>
-      <Footer />
-    </ThemeProvider>
+      <BrowserRouter>
+        <div id="app-wrapper">
+          <AppBar />
+          <Switch>
+            <Route exact match path="/home" component={MainPage} />
+            <Route exact match path="/challenge/create" component={CreateChallenge} />
+            <Redirect to="/home" />
+          </Switch>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </ThemeProvider >
   );
 }
 
