@@ -10,10 +10,13 @@ import {
   createMuiTheme
 } from '@material-ui/core';
 // Components
-import MainPage from './scenes/MainPage';
-import CreateChallenge from './scenes/CreateChallenge';
 import AppBar from './components/AppBar';
 import Footer from './components/Footer';
+// Scenes
+import MainPage from './scenes/MainPage';
+import CreateChallenge from './scenes/CreateChallenge';
+import Login from './scenes/Login';
+import SignUp from './scenes/SignUp';
 // Style
 import './App.css';
 
@@ -68,6 +71,8 @@ function App() {
         <div id="app-wrapper">
           <AppBar />
           <Switch>
+            <Route exact match path="/login" component={Login} />
+            <Route exact match path="/signup" component={SignUp} />
             <Route exact match path="/home" component={MainPage} />
             <Route exact match path="/challenge/create" component={CreateChallenge} />
             <Redirect to="/home" />

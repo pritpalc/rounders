@@ -7,7 +7,9 @@ export const signup = (state = {}, action) => {
         requesting: true
       };
     case constants.SIGNUP_SUCCESS:
-      return {};
+      return {
+        succeeded: true
+      };
     case constants.SIGNUP_FAILURE:
       return {
         failed: true
