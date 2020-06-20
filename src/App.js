@@ -1,15 +1,26 @@
 import React from 'react';
 import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom';
+import {
   ThemeProvider,
   createMuiTheme
 } from '@material-ui/core';
 // Components
-import CreateChallenge from './components/CreateChallenge';
 import AppBar from './components/AppBar';
-import Footer from './components/Footer/Footer';
+import Footer from './components/Footer';
+// Scenes
+import MainPage from './scenes/MainPage';
+import CreateChallenge from './scenes/CreateChallenge';
+import Login from './scenes/Login';
+import SignUp from './scenes/SignUp';
 // Style
 import './App.css';
-import MainPage from './components/MainPage/MainPage';
+import ListChallenges from './scenes/ListChallenges';
+import Profile from './scenes/Profile';
 
 const theme = createMuiTheme({
   palette: {
@@ -58,13 +69,22 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <AppBar />
-      <MainPage></MainPage>
-      <div id="App">
-        <CreateChallenge />
-      </div>
-      <Footer />
-    </ThemeProvider>
+      <BrowserRouter>
+        <div id="app-wrapper">
+          <AppBar />
+          <Switch>
+            <Route exact match path="/login" component={Login} />
+            <Route exact match path="/signup" component={SignUp} />
+            <Route exact match path="/home" component={MainPage} />
+            <Route exact match path="/profile" component={Profile} />
+            <Route exact match path="/challenge/create" component={CreateChallenge} />
+            <Route exact match path="/challenge/list" component={ListChallenges} />
+            <Redirect to="/home" />
+          </Switch>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </ThemeProvider >
   );
 }
 

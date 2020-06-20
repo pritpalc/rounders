@@ -1,7 +1,6 @@
 import React from 'react';
+import './style.css';
 import { SocialIcon } from 'react-social-icons';
-// Style
-import './Footer.css';
 
 export default class Footer extends React.Component {
 
@@ -17,6 +16,7 @@ export default class Footer extends React.Component {
           <SocialIcon network="youtube" className="social_icon" style={{ height: 48, width: 48 }} />
           <SocialIcon network="spotify" className="social_icon" style={{ height: 48, width: 48 }} />
         </div>
-      </div>);
+      </div>
+    );
   }
 }

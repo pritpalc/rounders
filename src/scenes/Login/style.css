@@ -1,0 +1,20 @@
+#login-form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 2rem 3rem 1rem 3rem;
+  border: 1px solid var(--soft-grey);
+  border-radius: var(--card-border-radius);
+}
+
+#login-form > * {
+  margin-bottom: 2rem;
+}
+
+.error-snackbar-content {
+  background-color: red !important; 
+}
+
+.success-snackbar-content {
+  background-color: green !important;
+}

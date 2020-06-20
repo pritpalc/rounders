@@ -39,7 +39,7 @@
   align-items: center;
   margin: 0.3rem;
   margin-right: 0.5rem;
-  border-color: #F64C72;;
+  border-color: var(--pink);
   border-width: 3px;
   background-color: #2f2fa2;
 }
