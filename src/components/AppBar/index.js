@@ -12,6 +12,11 @@ class AppBar extends React.Component {
           <span id="logo-text">rounders</span>
         </Link>
         <div id="buttons-wrapper">
+          <Link to="/profile">
+            <Button id="login-button" className="button">
+              Profile
+            </Button>
+          </Link>
           <Link to="/login">
             <Button id="login-button" className="button">
               Login

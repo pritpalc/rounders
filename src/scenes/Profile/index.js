@@ -1,23 +1,19 @@
-import React from 'react';
-import NavBar from '../components/Navbar';
+import React from 'react'
 import './styles.css';
-import Footer from '../components/Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { deepOrange } from '@material-ui/core/colors';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 
-class MainPage extends React.Component {
+class Profile extends React.Component {
   render() {
     return (
       <div>
-        <NavBar />
         <ProfileHeader />
         <ChallengeInfo />
         <ProfileNavBar />
         <ProfileInfo />
-        <Footer />
       </div>
     );
   }
@@ -88,8 +84,6 @@ function ProfileInfo() {
   );
 }
 
-export default MainPage;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -106,3 +100,5 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(11),
   }
 }));
+
+export default Profile;
