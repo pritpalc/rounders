@@ -1,47 +1,25 @@
 #main-page-wrapper {
   box-sizing: border-box;
-  height: 100vh;
+  min-height: calc(100vh - var(--app-bar-height) - var(--footer-height));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid var(--soft-grey);
+}
+
+#main-page-wrapper #compete-link {
+  color: var(--pink);
 }
 
 #title {
   font-weight: bold;
   text-align: center;
   margin-bottom: 1rem;
-  /* I commented out the rules that are not necessary */
-  /* font-family: Hiragino Sans; This one I commented out because it'd make our styling inconsistent */
-  /* font-style: normal; */
-  /* font-size: 75px; */
-
-  /* display: flex;
-  align-items: center; */
-  /* justify-content: center;
-  margin-block-start: 2rem;
-  margin-block-end: 0rem; */
-
-  /* color: #000000; */
 }
 
 #title2 {
   text-align: center;
   margin-bottom: 2rem;
-  /* Same as above */
-  /* font-family: Hiragino Sans; */
-  /* font-style: normal; */
-  /* font-weight: bold; */
-  /* font-size: 30px; */
-
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center;
-  margin-block-start: 0rem;
-  margin-block-end: 4rem;
-
-  color: #000000; */
 }
 
 #photos {
@@ -51,20 +29,11 @@
 }
 
 .info {
-  font-family: Hiragino Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-p {
-  margin: 0.5rem;
-}
-
 .redText {
-  color: #F64C72;
+  color: var(--pink);
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 // Assets
 import singer1 from './assets/images/singer1.png';
@@ -10,13 +11,25 @@ import './style.css';
 
 export default class MainPage extends React.Component {
 
+  getCompeteLink = () => {
+    return (
+      <Link
+        id="compete-link"
+        to="/challenge/create"
+        className="link-no-text-decoration"
+      >
+        Compete
+      </Link>
+    )
+  }
+
   render() {
     return (
       <div id="main-page-wrapper">
         <div>
           <div>
             <Typography id="title" variant="h1"> Are you a musician? </Typography>
-            <Typography id="title2" variant="h5"> Let your talent shine. Compete. Earn money.</Typography>
+            <Typography id="title2" variant="h5"> Let your talent shine. {this.getCompeteLink()}. Earn money.</Typography>
           </div>
           <div id="photos">
             <img src={singer1} alt=""></img>
