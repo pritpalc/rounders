@@ -2,8 +2,7 @@ import { combineReducers } from 'redux';
 
 import { auth } from './users/reducers/auth';
 import { signup } from './users/reducers/signup';
-import { createChallenge } from './challenges/reducers/createChallenge';
-import { getChallenges } from './challenges/reducers/getChallenges';
+import { createChallenge, getChallenges } from './challenges/reducer';
 
 const rootReducer = combineReducers({
   auth,

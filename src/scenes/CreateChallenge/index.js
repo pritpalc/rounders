@@ -160,7 +160,7 @@ class CreateChallenge extends React.Component {
                 this.setState({ inputError: "Please choose 3 songs to start a challenge" });
               } else {
                 window.alert(`Creating your challenge with your choices: ${this.state.songsChosen.join(', ')}`);
-                this.props.getChallenges(this.state.songsChosen);
+                this.props.createChallenge(this.state.songsChosen, "0"); // TODO: id
                 this.props.history.push('/challenge/list');
               }
             }}
@@ -174,7 +174,7 @@ class CreateChallenge extends React.Component {
 };
 
 const mapDispatchToProps = {
-  getChallenges: challengeActions.getChallenges
+  createChallenge: challengeActions.createChallenge
 }
 
 export default connect(undefined, mapDispatchToProps)(CreateChallenge);
