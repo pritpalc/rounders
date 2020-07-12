@@ -1,16 +1,16 @@
 import { constants } from '../constants';
 
-export const signup = (state = {}, action) => {
+export const createChallenge = (state = {}, action) => {
   switch (action.type) {
-    case constants.SIGNUP_REQUEST:
+    case constants.CREATE_CHALLENGE_REQUEST:
       return {
         requesting: true
       };
-    case constants.SIGNUP_SUCCESS:
+    case constants.CREATE_CHALLENGE_SUCCESS:
       return {
         succeeded: true
       };
-    case constants.SIGNUP_FAILURE:
+    case constants.CREATE_CHALLENGE_FAILURE:
       return {
         failed: true
       };

@@ -1,21 +1,35 @@
 import React from 'react';
-import NavBar from '../components/Navbar';
-import './styles.css';
+import { Link } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
+// Assets
 import singer1 from './assets/images/singer1.png';
 import singer2 from './assets/images/singer2.png';
 import singer3 from './assets/images/singer3.png';
 import singer4 from './assets/images/singer4.png';
-import Footer from '../components/Footer';
+// Style
+import './style.css';
 
-class MainPage extends React.Component {
+export default class MainPage extends React.Component {
+
+  getCompeteLink = () => {
+    return (
+      <Link
+        id="compete-link"
+        to="/challenge/create"
+        className="link-no-text-decoration"
+      >
+        Compete
+      </Link>
+    )
+  }
+
   render() {
     return (
-      <div>
-        <NavBar />
+      <div id="main-page-wrapper">
         <div>
           <div>
-            <p id="title"> Are you a musician? </p>
-            <p id="title2">Let your talent shine. Compete. Earn money.</p>
+            <Typography id="title" variant="h1"> Are you a musician? </Typography>
+            <Typography id="title2" variant="h5"> Let your talent shine. {this.getCompeteLink()}. Earn money.</Typography>
           </div>
           <div id="photos">
             <img src={singer1} alt=""></img>
@@ -24,15 +38,11 @@ class MainPage extends React.Component {
             <img src={singer4} alt=""></img>
           </div>
           <div className="info">
-            <p><span className="redText">36,845</span> rounders have been active today</p>
-            <p><span className="redText">2,874</span> challenges completed</p>
-            <p>Over <span className="redText">$50,000</span> distributed in prizes</p>
+            <Typography component="p" variant="subtitle1"><Typography component="span" variant="subtitle1" className="redText">36,845</Typography> rounders have been active today</Typography>
+            <Typography component="p" variant="subtitle1"><Typography component="span" variant="subtitle1" className="redText">2,874</Typography> challenges completed</Typography>
+            <Typography component="p" variant="subtitle1">Over <Typography component="span" variant="subtitle1" className="redText">$50,000</Typography> distributed in prizes</Typography>
           </div>
         </div>
-        <Footer />
-      </div>
-    );
+      </div>);
   }
 }
-
-export default MainPage;

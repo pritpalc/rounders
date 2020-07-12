@@ -13,6 +13,7 @@ export const auth = (state = initialState, action) => {
     case constants.LOGIN_SUCCESS:
       return {
         loggedIn: true,
+        succeeded: true,
         ...action.user,
       };
     case constants.LOGIN_FAILURE:

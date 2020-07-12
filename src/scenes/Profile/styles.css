@@ -1,0 +1,44 @@
+#profileHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.flex_center {
+  display: flex;
+  justify-content: center
+}
+
+.flex_center_space {
+  display: flex;
+  justify-content: space-evenly;
+  padding-left: 270px;
+  padding-right: 270px;
+}
+
+#subheading {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.add_margin {
+  margin: 1rem;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.stas {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 32%;
+  align-items: center;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+h3 {
+  margin-top: 0;
+}

@@ -18,6 +18,10 @@ Depending on time constraints we can add additional functionality for different 
 * Ability to create challenges with song preferences
   * Create a challenges endpoint that takes in 3 song choices and randomly matches a user with the challenge
   * Create a form to submit a challenge request with the ability to search and choose 3 song choices
+* Ability to manage the challenges I've created
+  * Ability to see the challenges I've created
+  * Ability to delete the challenges I've created
+* Ability to see and accept challenges by other users
   * Create a notifications endpoint to send the matched user a notification and another endpoint to receive the chosen song
   * Create user notifications to receive a challenge and the ability to pick one of the 3 given song choices
 * Ability to upload challenge videos
