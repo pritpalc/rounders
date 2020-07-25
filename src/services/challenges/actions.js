@@ -2,11 +2,21 @@ import { constants } from './constants';
 import { challengeServices } from './api';
 
 function createChallenge(songs, id) {
-  console.log('trigger createChallenge')
   return (dispatch) => {
     dispatch(request());
 
-    challengeServices.createChallenge({ songs, challenger: id })
+    const trackOptions = [
+      {
+          "artistName": songs[0].split(" - ")[0],
+          "trackName": songs[0].split(" - ")[1]
+      },
+      {
+        "artistName": songs[1].split(" - ")[0],
+        "trackName": songs[1].split(" - ")[1]
+      }
+  ]
+
+    challengeServices.createChallenge({ trackOptions: trackOptions, challengedTo: id })
       .then(
         res => {
           dispatch(success(res));

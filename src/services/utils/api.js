@@ -3,6 +3,8 @@ export const SESSION_LS_KEY = "user";
 
 export function handleResponse(response) {
   return response.text().then((text) => {
+    console.log("RETURNING RESPONSE")
+    console.log(response)
     let data;
     if (!response.ok) {
       data = text && JSON.parse(text);
@@ -12,6 +14,8 @@ export function handleResponse(response) {
     } else {
       data = text && JSON.parse(text);
     }
+    console.log("RETURNING DATA")
+    console.log(data)
 
     return data;
   });

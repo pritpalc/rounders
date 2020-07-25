@@ -23,23 +23,29 @@ export function getChallengesForUser(user) {
     user: user
   };
 
-  return fetch(`${BASE_API}challenges/me`, requestOptions)
+  return fetch(`${BASE_API}/challenges/me`, requestOptions)
     .then(handleResponse);
 }
 
-export function createChallenge(body) {
+export function createChallenge(body, user) {
   console.log("CREATING CHALLENGE")
-  console.log(body)
   const requestOptions = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
+    credentials: 'include'
   };
 
-  return fetch(`${BASE_API}challenges`, requestOptions)
-    .then(handleResponse);
+  console.log("HERES THE REQUEST OPTIONS")
+  console.log(requestOptions)
+
+  return fetch(`${BASE_API}/challenges`, requestOptions)
+    .then(handleResponse)
+    .then((challenge) => {
+      return challenge
+    });
 }
 
 export function acceptChallenge(id) {
@@ -50,7 +56,7 @@ export function acceptChallenge(id) {
     }
   };
 
-  return fetch(`${BASE_API}challenges/${id}/accept`, requestOptions)
+  return fetch(`${BASE_API}/challenges/${id}/accept`, requestOptions)
     .then(handleResponse);
 }
 
