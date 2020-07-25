@@ -26,6 +26,26 @@ export const getChallenges = (state = {}, action) => {
   }
 };
 
+export const getChallengesForUser = (state = {}, action) => {
+  switch (action.type) {
+    case constants.CHALLENGES_REQUEST:
+      return {
+        status: STATUS.request
+      };
+    case constants.CHALLENGES_SUCCESS:
+      return {
+        data: action.res,
+        status: STATUS.success
+      };
+    case constants.CHALLENGES_FAILURE:
+      return {
+        status: STATUS.failed
+      };
+    default:
+      return state;
+  }
+};
+
 export const createChallenge = (state = {}, action) => {
   switch (action.type) {
     case constants.CREATE_CHALLENGE_REQUEST:
