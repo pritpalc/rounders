@@ -1,4 +1,4 @@
-const BASE_API = "http://localhost:9000/"
+import { BASE_API, handleResponse } from '../utils/api';
 
 export function getChallenges() {
   const requestOptions = {
@@ -23,12 +23,6 @@ export function createChallenge(body) {
 
   return fetch(`${BASE_API}challenges`, requestOptions)
     .then(handleResponse);
-}
-
-function handleResponse(res) {
-  return res.text()
-    .then(text => text && JSON.parse(text))
-    .catch(err => console.log(err));
 }
 
 export const challengeServices = {
