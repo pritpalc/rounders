@@ -1,8 +1,9 @@
 import { constants } from '../constants';
+import { SESSION_LS_KEY } from '../../utils/api';
 
-let user = localStorage.getItem("user");
+let user = localStorage.getItem(SESSION_LS_KEY);
 user = user ? JSON.parse(user) : {};
-const initialState = Object.keys(user).length > 0 && user.token ? { loggedIn: true, ...user } : {};
+const initialState = Object.keys(user).length > 0 && user.token ? { ...user } : {};
 
 export const auth = (state = initialState, action) => {
   switch (action.type) {
@@ -12,7 +13,6 @@ export const auth = (state = initialState, action) => {
       };
     case constants.LOGIN_SUCCESS:
       return {
-        loggedIn: true,
         succeeded: true,
         ...action.user,
       };
@@ -21,9 +21,7 @@ export const auth = (state = initialState, action) => {
         failed: true
       };
     case constants.LOGOUT:
-      return {
-        loggedIn: false
-      };
+      return {};
     default:
       return state;
   }

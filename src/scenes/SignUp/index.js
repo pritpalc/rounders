@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import {
   TextField,
   Button,
   Typography,
-  Snackbar
+  Snackbar,
+  Grid
 } from '@material-ui/core';
 // Utils and services
 import { userActions } from '../../services/users/actions';
@@ -16,10 +18,14 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: "",
       email: "",
       password: "",
+      firstName: "",
+      lastName: "",
       successMessage: "",
-      errorMessage: ""
+      errorMessage: "",
+      redirectToLogin: false
     }
   }
 
@@ -29,7 +35,11 @@ class SignUp extends React.Component {
       if (signUpResponse.failed) {
         this.setState({ errorMessage: "We are unable to sign you up at this moment, please try again later" });
       } else {
-        this.setState({ successMessage: "Welcome to rounders!" });
+        this.setState({ successMessage: "Welcome to rounders!" }, () => {
+          setTimeout(() => {
+            this.setState({ redirectToLogin: true });
+          }, 1000);
+        });
       }
     }
   }
@@ -37,6 +47,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <div id="sign-up-wrapper">
+        {this.state.redirectToLogin && <Redirect to="/login" />}
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           open={this.state.errorMessage !== ""}
@@ -57,15 +68,41 @@ class SignUp extends React.Component {
         />
         <Typography variant="h6" color="primary">Welcome to rounders!</Typography>
         <form id="signup-form">
+          <Grid
+            container
+            justify="space-between"
+          >
+            <TextField
+              label="First name"
+              value={this.state.firstName}
+              type="text"
+              variant="outlined"
+              onChange={event => { this.setState({ firstName: event.target.value }) }}
+            />
+            <TextField
+              label="Last name"
+              value={this.state.firstName}
+              type="text"
+              variant="outlined"
+              onChange={event => { this.setState({ lastName: event.target.value }) }}
+            />
+          </Grid>
           <TextField
-            label="Your email"
+            label="Email"
             value={this.state.email}
             type="text"
             variant="outlined"
             onChange={event => { this.setState({ email: event.target.value }) }}
           />
           <TextField
-            label="Your password"
+            label="Username"
+            value={this.state.username}
+            type="text"
+            variant="outlined"
+            onChange={event => { this.setState({ username: event.target.value }) }}
+          />
+          <TextField
+            label="Password"
             value={this.state.password}
             type="password"
             variant="outlined"
@@ -78,12 +115,11 @@ class SignUp extends React.Component {
             size="large"
             onClick={event => {
               event.preventDefault();
-              const email = this.state.email;
-              const password = this.state.password;
-              if (email === "" || password === "") {
-                this.setState({ errorMessage: "Please provide both your email and password" });
+              const { firstName, lastName, email, username, password } = this.state;
+              if (!firstName || !lastName || !email || !email || !username || !password) {
+                this.setState({ errorMessage: "All fields are required" });
               } else {
-                this.props.signup({ email, password });
+                this.props.signup({ firstName, lastName, email, username, password });
               }
             }}
             fullWidth

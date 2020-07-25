@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import {
   TextField,
   Button,
@@ -35,8 +36,10 @@ class Login extends React.Component {
   }
 
   render() {
+    const { auth } = this.props;
     return (
       <div id="login-wrapper">
+        {auth.token && <Redirect to="/profile" />}
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           open={this.state.errorMessage !== ""}

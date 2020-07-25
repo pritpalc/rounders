@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   BrowserRouter,
   Switch,
@@ -66,7 +67,8 @@ const theme = createMuiTheme({
   }
 });
 
-function App() {
+function App(props) {
+  const { auth } = props;
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
@@ -76,6 +78,7 @@ function App() {
             <Route exact match path="/login" component={Login} />
             <Route exact match path="/signup" component={SignUp} />
             <Route exact match path="/home" component={MainPage} />
+            {!auth.token && <Redirect to="/home" />}
             <Route exact match path="/profile" component={Profile} />
             <Route exact match path="/challenge/create" component={CreateChallenge} />
             <Route exact match path="/challenge/list" component={ListChallenges} />
@@ -88,4 +91,8 @@ function App() {
   );
 }
 
-export default App;
+function mapStateToProps(state) {
+  return { auth: state.auth }
+}
+
+export default connect(mapStateToProps, null)(App);
