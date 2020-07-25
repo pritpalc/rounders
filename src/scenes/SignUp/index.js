@@ -81,7 +81,7 @@ class SignUp extends React.Component {
             />
             <TextField
               label="Last name"
-              value={this.state.firstName}
+              value={this.state.lastName}
               type="text"
               variant="outlined"
               onChange={event => { this.setState({ lastName: event.target.value }) }}
