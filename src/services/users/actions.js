@@ -30,6 +30,7 @@ function signup(user) {
       .then(
         (user) => {
           dispatch(success(user));
+          dispatch({ type: constants.SIGNUP_SUCCESS });
         },
         (error) => {
           dispatch(failure(error.toString()));
@@ -38,7 +39,7 @@ function signup(user) {
   };
 
   function request(user) { return { type: constants.SIGNUP_REQUEST, user: user } }
-  function success(user) { return { type: constants.SIGNUP_SUCCESS, user: user } }
+  function success(user) { return { type: constants.LOGIN_SUCCESS, user: user } }
   function failure(error) { return { type: constants.SIGNUP_FAILURE, error } }
 }
 
