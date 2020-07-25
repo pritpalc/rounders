@@ -25,6 +25,18 @@ export function createChallenge(body) {
     .then(handleResponse);
 }
 
+export function acceptChallenge(id) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  };
+
+  return fetch(`${BASE_API}challenges/${id}/accept`, requestOptions)
+    .then(handleResponse);
+}
+
 export const challengeServices = {
   getChallenges,
   createChallenge,
