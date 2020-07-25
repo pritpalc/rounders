@@ -2,6 +2,7 @@ import { constants } from './constants';
 import { challengeServices } from './api';
 
 function createChallenge(songs, id) {
+  console.log('trigger createChallenge')
   return (dispatch) => {
     dispatch(request());
 
@@ -21,10 +22,27 @@ function createChallenge(songs, id) {
 }
 
 function getChallenges() {
+  console.log('trigger getchallenges')
   return (dispatch) => {
     dispatch(request());
 
     challengeServices.getChallenges()
+      .then(
+        res => dispatch(success(res)),
+        err => dispatch(failure(err))
+      );
+  };
+
+  function request() { return { type: constants.CHALLENGES_REQUEST } }
+  function success(res) { return { type: constants.CHALLENGES_SUCCESS, res } }
+  function failure(error) { return { type: constants.CHALLENGES_FAILURE, error } }
+}
+
+function getChallengesForUser(id) {
+  return (dispatch) => {
+    dispatch(request());
+
+    challengeServices.getChallengesForUser()
       .then(
         res => dispatch(success(res)),
         err => dispatch(failure(err))
@@ -55,5 +73,6 @@ function acceptChallenge() {
 export const challengeActions = {
   createChallenge,
   getChallenges,
+  getChallengesForUser,
   acceptChallenge
 };

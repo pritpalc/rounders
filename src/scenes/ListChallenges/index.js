@@ -25,7 +25,37 @@ class ListChallenges extends React.Component {
   }
 
   renderLists = () => {
-    return this.state.challenges.map((challenge, index) => {
+    const challenges = this.state.challenges
+    // Check if there are any available challenges
+    if (Object.keys(challenges).length > 0) {
+      return challenges.map((challenge, index) => {
+        return (
+          <Grid item
+            xs={3}
+            className="list-challenges-item"
+            key={index}
+          >
+            <Typography
+              variant="h6"
+            >
+              Challenge {index + 1} songs:
+              </Typography>
+            <ul>
+              <li key={index + '-track1'}>{challenge.trackOptions[0].trackName}</li>
+              <li key={index + '-track2'}>{challenge.trackOptions[1].trackName}</li>
+            </ul>
+            <Typography
+              variant="h6"
+            >
+              Challenger:
+              </Typography>
+            <ul>
+              <li key={index + 'name'}>{challenge.challengedBy.firstName} {challenge.challengedBy.lastName}</li>
+            </ul>
+          </Grid>
+        );
+      });
+    } else {
       return (
         <Grid item
           xs={3}
@@ -34,16 +64,11 @@ class ListChallenges extends React.Component {
           <Typography
             variant="h6"
           >
-            Challenge {index + 1} songs:
+            No Challenges Available
             </Typography>
-          <ul>
-            <li>{challenge.songs[0]}</li>
-            <li>{challenge.songs[1]}</li>
-            <li>{challenge.songs[2]}</li>
-          </ul>
         </Grid>
       );
-    });
+    }
   };
 
   render() {

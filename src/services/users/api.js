@@ -15,6 +15,7 @@ function login(email, password) {
     .then(handleResponse)
     .then((user) => {
       localStorage.setItem(SESSION_LS_KEY, JSON.stringify(user));
+      console.log(user)
       return user;
     });
 }
