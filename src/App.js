@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core';
 // Components
 import AppBar from './components/AppBar';
-import Footer from './components/Footer';
 // Scenes
 import MainPage from './scenes/MainPage';
 import CreateChallenge from './scenes/CreateChallenge';
@@ -84,7 +83,6 @@ function App(props) {
             <Route exact match path="/challenge/list" component={ListChallenges} />
             <Redirect to="/home" />
           </Switch>
-          <Footer />
         </div>
       </BrowserRouter>
     </ThemeProvider >
