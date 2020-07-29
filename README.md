@@ -1,4 +1,6 @@
-*rounders* is a musical competition web app where users sign up and create profiles about themselves and their musical preferences. Users get the opportunity to accept and send out challenges to other users to face off in singing competitions with specific song choices. 
+**rounders** is a musical competition web app where users sign up and create profiles about themselves and their musical preferences. Users get the opportunity to accept and send out challenges to other users to face off in singing competitions with specific song choices. 
+
+**Note**: this repository holds the frontend code of the application. Here is the [backend](https://github.com/mehtamanan/436-api).
 
 
 # CPSC 436I
