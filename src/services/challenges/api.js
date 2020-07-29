@@ -1,15 +1,16 @@
 import { BASE_API, handleResponse } from '../utils/api';
 
-export function getChallenges() {
-  console.log("getting challenges")
-  const requestOptions = {
+// Get challenges; token provided is for providing authentication in the backend
+function getChallenges(token) {
+  const options = {
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
     }
   };
 
-  return fetch(`${BASE_API}challenges`, requestOptions)
+  return fetch(`${BASE_API}/challenges`, options)
     .then(handleResponse);
 }
 

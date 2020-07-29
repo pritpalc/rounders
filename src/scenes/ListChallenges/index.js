@@ -1,25 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Typography } from '@material-ui/core';
-import './style.css';
+// Services and utils
 import { challengeActions } from '../../services/challenges/actions';
 import { STATUS } from '../../services/challenges/reducer';
+// Style
+import './style.css';
 
 class ListChallenges extends React.Component {
   constructor(props) {
     super(props);
-
-    this.props.getChallenges();
-
     this.state = {
       challenges: []
+    }
+  }
+
+  componentDidMount() {
+    const { token } = this.props.auth;
+    if (token !== undefined) {
+      this.props.getChallenges(token);
     }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.challenges.status === STATUS.request && this.props.challenges.status === STATUS.success) {
       this.setState({
-        challenges: this.props.challenges.data.challenges
+        challenges: this.props.challenges.data
       });
     }
   }
@@ -57,15 +63,17 @@ class ListChallenges extends React.Component {
       });
     } else {
       return (
-        <Grid item
-          xs={3}
+        <Grid
+          item
+          xs={6}
           className="list-challenges-item"
         >
           <Typography
             variant="h6"
+            align="center"
           >
-            No Challenges Available
-            </Typography>
+            You have not created any challenges yet.
+          </Typography>
         </Grid>
       );
     }
@@ -86,6 +94,7 @@ class ListChallenges extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    auth: state.auth,
     challenges: state.getChallenges
   }
 }

@@ -14,7 +14,7 @@ export const getChallenges = (state = {}, action) => {
       };
     case constants.CHALLENGES_SUCCESS:
       return {
-        data: action.res,
+        data: action.response,
         status: STATUS.success
       };
     case constants.CHALLENGES_FAILURE:

@@ -34,7 +34,7 @@ class AppBar extends React.Component {
                     variant="contained"
                     color="primary"
                   >
-                    Challenge
+                    New Challenge
                   </Button>
                 </Link>
                 <Link
