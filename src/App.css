@@ -11,6 +11,10 @@
   --pink: #F64C72;
 }
 
+html * {
+  box-sizing: border-box;
+}
+
 #app-wrapper {
   position: relative;
   display: flex;

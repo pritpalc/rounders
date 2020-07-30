@@ -1,15 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import Avatar from '@material-ui/core/Avatar';
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
-import { constants } from '../../services/challenges/constants';
+import { Avatar, ListItem, Divider } from '@material-ui/core';
+// Reusable components
+import Loader from '../../components/Loader';
+// Services and utils
 import { challengeActions } from '../../services/challenges/actions';
+import { STATUS } from '../../services/challenges/reducer';
 // Style
 import './styles.css';
 
 class Profile extends React.Component {
+
+  componentDidMount() {
+    this.props.getMyChallenges(this.props.auth.token);
+  }
 
   getTotalChallenges = (challenges) => {
     return Object.keys(challenges).length
@@ -21,35 +26,38 @@ class Profile extends React.Component {
   }
 
   getChallengeInfo = () => {
-    const challenges = this.props.challenges
+    const getMyChallengesResponse = this.props.getMyChallengesResponse;
+    const challenges = getMyChallengesResponse.data;
+    const loading = getMyChallengesResponse.status === STATUS.request;
     // If user has no history of challenges do not display challenge data
-    if (Object.keys(challenges).length > 0 && challenges.constructor === Object) {
-      const completed = this.getTotalChallenges(challenges)
-      const victories = 1
-      const winRate = victories / completed * 100
-      return (
-        <div className="flex_center_space">
-          <div className="stas">
-            <Avatar className="stat-completed-summary-avatar">
-              {completed}
-            </Avatar>
-            <h3>Challenges Completed</h3>
-          </div>
-          <div className="stas">
-            <Avatar className="stat-victories-summary-avatar">
-              {victories}
-            </Avatar>
-            <h3>Victories</h3>
-          </div>
-          <div className="stas">
-            <Avatar className="stat-rate-summary-avatar">
-              {winRate}%
-            </Avatar>
-            <h3>Win Rate</h3>
-          </div>
-        </div>
-      );
+    let totalChallenges = 0, victories = 0, winRate = 0;
+    if (challenges && challenges.length > 0) {
+      totalChallenges = challenges.length;
+      victories = 1;
+      winRate = victories / totalChallenges * 100;
     }
+    return (
+      <div className="flex_center_space">
+        <div className="stas">
+          <Avatar className="stat-completed-summary-avatar">
+            {loading ? "..." : totalChallenges}
+          </Avatar>
+          <h3>Total Challenges</h3>
+        </div>
+        <div className="stas">
+          <Avatar className="stat-victories-summary-avatar">
+            {loading ? "..." : victories}
+          </Avatar>
+          <h3>Victories</h3>
+        </div>
+        <div className="stas">
+          <Avatar className="stat-rate-summary-avatar">
+            {loading ? "..." : `${winRate}%`}
+          </Avatar>
+          <h3>Win Rate</h3>
+        </div>
+      </div>
+    );
   }
 
   getProfileHeader = () => {
@@ -86,13 +94,20 @@ class Profile extends React.Component {
 
   render() {
     const user = this.props.auth.user;
+    const { getMyChallengesResponse } = this.props;
     return (
-      <div id="profile-wrapper">
+      <div
+        id="profile-wrapper"
+        style={{
+          position: "relative" // For loader to position itself
+        }}
+      >
+        {getMyChallengesResponse.status === STATUS.request && <Loader />}
         {this.getProfileHeader()}
         <Avatar className="stat-summary-avatar">
           {user.firstName.charAt(0)}{user.lastName.charAt(0)}
         </Avatar>
-        {/* {this.getChallengeInfo()} */}
+        {this.getChallengeInfo()}
         {this.getProfileInfo()}
       </div>
     );
@@ -102,12 +117,12 @@ class Profile extends React.Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    challenges: state.getChallengesForUser
+    getMyChallengesResponse: state.getMyChallenges
   }
 }
 
 const mapDispatchToProps = {
-  getChallengesForUser: challengeActions.getChallengesForUser
+  getMyChallenges: challengeActions.getMyChallenges
 }
 
-export default connect(mapStateToProps, null)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

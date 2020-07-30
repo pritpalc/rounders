@@ -1,10 +1,20 @@
+#login-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #login-form {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 500px;
   padding: 2rem 3rem 1rem 3rem;
   border: 1px solid var(--soft-grey);
   border-radius: var(--card-border-radius);
+  margin-top: 1.5rem;
 }
 
 #login-form > * {

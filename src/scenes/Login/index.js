@@ -58,42 +58,49 @@ class Login extends React.Component {
             classes: { root: "success-snackbar-content" }
           }}
         />
-        <Typography variant="h6" color="primary">We're glad to have you back!</Typography>
-        <form id="login-form">
-          <TextField
-            label="Your email"
-            value={this.state.email}
-            type="text"
-            variant="outlined"
-            onChange={event => { this.setState({ email: event.target.value }) }}
-          />
-          <TextField
-            label="Your password"
-            value={this.state.password}
-            type="password"
-            variant="outlined"
-            onChange={event => { this.setState({ password: event.target.value }) }}
-          />
-          <Button
-            type="submit"
+        <div id="login-text-and-form-wrapper">
+          <Typography
+            variant="h5"
             color="primary"
-            variant="outlined"
-            size="large"
-            onClick={event => {
-              event.preventDefault();
-              const email = this.state.email;
-              const password = this.state.password;
-              if (email === "" || password === "") {
-                this.setState({ errorMessage: "Please provide both your email and password" });
-              } else {
-                this.props.login(this.state.email, this.state.password);
-              }
-            }}
-            fullWidth
           >
-            Login
+            We're glad to have you back!
+          </Typography>
+          <form id="login-form">
+            <TextField
+              label="Your email"
+              value={this.state.email}
+              type="text"
+              variant="outlined"
+              onChange={event => { this.setState({ email: event.target.value }) }}
+            />
+            <TextField
+              label="Your password"
+              value={this.state.password}
+              type="password"
+              variant="outlined"
+              onChange={event => { this.setState({ password: event.target.value }) }}
+            />
+            <Button
+              type="submit"
+              color="primary"
+              variant="outlined"
+              size="large"
+              onClick={event => {
+                event.preventDefault();
+                const email = this.state.email;
+                const password = this.state.password;
+                if (email === "" || password === "") {
+                  this.setState({ errorMessage: "Please provide both your email and password" });
+                } else {
+                  this.props.login(this.state.email, this.state.password);
+                }
+              }}
+              fullWidth
+            >
+              Login
           </Button>
-        </form>
+          </form>
+        </div>
       </div>
     )
   }

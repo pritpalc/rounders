@@ -1,14 +1,28 @@
+#sign-up-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+#sign-up-title-and-form-wrapper {
+  margin: auto;
+}
+
 #signup-form {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 500px;
+  height: 450px;
   padding: 2rem 3rem 1rem 3rem;
   border: 1px solid var(--soft-grey);
   border-radius: var(--card-border-radius);
+  margin-top: 1rem;
 }
 
 #signup-form > * {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .error-snackbar-content {

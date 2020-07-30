@@ -26,7 +26,7 @@ export const getChallenges = (state = {}, action) => {
   }
 };
 
-export const getChallengesForUser = (state = {}, action) => {
+export const getMyChallenges = (state = {}, action) => {
   switch (action.type) {
     case constants.CHALLENGES_REQUEST:
       return {

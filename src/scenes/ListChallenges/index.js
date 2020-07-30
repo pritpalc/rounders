@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Typography } from '@material-ui/core';
+// Components
+import Loader from '../../components/Loader';
 // Services and utils
 import { challengeActions } from '../../services/challenges/actions';
 import { STATUS } from '../../services/challenges/reducer';
@@ -18,14 +20,14 @@ class ListChallenges extends React.Component {
   componentDidMount() {
     const { token } = this.props.auth;
     if (token !== undefined) {
-      this.props.getChallenges(token);
+      this.props.getMyChallenges(token);
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.challenges.status === STATUS.request && this.props.challenges.status === STATUS.success) {
+    if (prevProps.getMyChallengesResponse.status === STATUS.request && this.props.getMyChallengesResponse.status === STATUS.success) {
       this.setState({
-        challenges: this.props.challenges.data
+        challenges: this.props.getMyChallengesResponse.data
       });
     }
   }
@@ -35,28 +37,35 @@ class ListChallenges extends React.Component {
     // Check if there are any available challenges
     if (Object.keys(challenges).length > 0) {
       return challenges.map((challenge, index) => {
+        const auth = this.props.auth;
+        const userId = (auth.user && auth.user._id) || "";
+        const challengedBy = challenge.challengedBy;
+        const challengedTo = challenge.challengedTo;
+        const userCreatedChallenge = userId === challengedBy._id;
         return (
-          <Grid item
+          <Grid
+            item
             xs={3}
             className="list-challenges-item"
             key={index}
           >
-            <Typography
-              variant="h6"
-            >
-              Challenge {index + 1} songs:
-              </Typography>
-            <ul>
-              <li key={index + '-track1'}>{challenge.trackOptions[0].trackName}</li>
-              <li key={index + '-track2'}>{challenge.trackOptions[1].trackName}</li>
-            </ul>
-            <Typography
-              variant="h6"
-            >
-              Challenger:
-              </Typography>
-            <ul>
-              <li key={index + 'name'}>{challenge.challengedBy.firstName} {challenge.challengedBy.lastName}</li>
+            <Typography color="primary">
+              {userCreatedChallenge ?
+                `You have challenged ${challengedTo.firstName} ${challengedTo.lastName} with these songs options:`
+                :
+                `${challengedBy.firstName} ${challengedBy.lastName} has challenged you with these songs options:`
+              }
+            </Typography>
+            <ul className="track-options-list">
+              {challenge.trackOptions.map(track => {
+                return (
+                  <li key={`${index}${track.trackName}`}>
+                    <Typography>
+                      {track.artistName} - {track.trackName}
+                    </Typography>
+                  </li>
+                )
+              })}
             </ul>
           </Grid>
         );
@@ -80,18 +89,23 @@ class ListChallenges extends React.Component {
   };
 
   render() {
+    const getMyChallengesResponse = this.props.getMyChallengesResponse;
     return (
       <Grid
         container
         justify="center"
         alignContent="center"
-        spacing={3}
         style={{
           height: "100%",
-          width: "100%"
+          width: "100%",
+          position: "relative" // For loader to position itself
         }}
       >
-        {this.renderLists()}
+        {getMyChallengesResponse.status === STATUS.request ?
+          <Loader />
+          :
+          this.renderLists()
+        }
       </Grid>
     );
   }
@@ -100,12 +114,12 @@ class ListChallenges extends React.Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    challenges: state.getChallenges
+    getMyChallengesResponse: state.getMyChallenges
   }
 }
 
 const mapDispatchToProps = {
-  getChallenges: challengeActions.getChallenges
+  getMyChallenges: challengeActions.getMyChallenges
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListChallenges);

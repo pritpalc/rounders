@@ -5,8 +5,8 @@ function getChallenges(token) {
   const options = {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
     }
   };
 
@@ -14,39 +14,31 @@ function getChallenges(token) {
     .then(handleResponse);
 }
 
-export function getChallengesForUser(user) {
-  console.log("getting challenges for user")
+export function getMyChallenges(token) {
   const requestOptions = {
     method: "GET",
     headers: {
+      "Authorization": `Bearer ${token}`,
       "Content-Type": "application/json"
-    },
-    user: user
+    }
   };
 
   return fetch(`${BASE_API}/challenges/me`, requestOptions)
     .then(handleResponse);
 }
 
-export function createChallenge(body, user) {
-  console.log("CREATING CHALLENGE")
+export function createChallenge(challenge, token) {
   const requestOptions = {
     method: "POST",
     headers: {
+      "Authorization": `Bearer ${token}`,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(body),
-    credentials: 'include'
+    body: JSON.stringify(challenge)
   };
 
-  console.log("HERES THE REQUEST OPTIONS")
-  console.log(requestOptions)
-
   return fetch(`${BASE_API}/challenges`, requestOptions)
-    .then(handleResponse)
-    .then((challenge) => {
-      return challenge
-    });
+    .then(handleResponse);
 }
 
 export function acceptChallenge(id) {
@@ -63,6 +55,6 @@ export function acceptChallenge(id) {
 
 export const challengeServices = {
   getChallenges,
-  getChallengesForUser,
+  getMyChallenges,
   createChallenge,
 };

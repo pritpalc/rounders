@@ -66,67 +66,86 @@ class SignUp extends React.Component {
             classes: { root: "success-snackbar-content" }
           }}
         />
-        <Typography variant="h6" color="primary">Welcome to rounders!</Typography>
-        <form id="signup-form">
-          <Grid
-            container
-            justify="space-between"
-          >
-            <TextField
-              label="First name"
-              value={this.state.firstName}
-              type="text"
-              variant="outlined"
-              onChange={event => { this.setState({ firstName: event.target.value }) }}
-            />
-            <TextField
-              label="Last name"
-              value={this.state.lastName}
-              type="text"
-              variant="outlined"
-              onChange={event => { this.setState({ lastName: event.target.value }) }}
-            />
-          </Grid>
-          <TextField
-            label="Email"
-            value={this.state.email}
-            type="text"
-            variant="outlined"
-            onChange={event => { this.setState({ email: event.target.value }) }}
-          />
-          <TextField
-            label="Username"
-            value={this.state.username}
-            type="text"
-            variant="outlined"
-            onChange={event => { this.setState({ username: event.target.value }) }}
-          />
-          <TextField
-            label="Password"
-            value={this.state.password}
-            type="password"
-            variant="outlined"
-            onChange={event => { this.setState({ password: event.target.value }) }}
-          />
-          <Button
-            type="submit"
+        <div id="sign-up-title-and-form-wrapper">
+          <Typography
+            variant="h5"
             color="primary"
-            variant="outlined"
-            size="large"
-            onClick={event => {
-              event.preventDefault();
-              const { firstName, lastName, email, username, password } = this.state;
-              if (!firstName || !lastName || !email || !email || !username || !password) {
-                this.setState({ errorMessage: "All fields are required" });
-              } else {
-                this.props.signup({ firstName, lastName, email, username, password });
-              }
-            }}
-            fullWidth
           >
-            Sign Up
+            Welcome to rounders!
+        </Typography>
+          <form id="signup-form">
+            <Grid
+              container
+              justify="space-between"
+              spacing={1}
+            >
+              <Grid
+                item
+                xs={6}
+              >
+                <TextField
+                  label="First name"
+                  value={this.state.firstName}
+                  type="text"
+                  variant="outlined"
+                  onChange={event => { this.setState({ firstName: event.target.value }) }}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={6}
+              >
+                <TextField
+                  label="Last name"
+                  value={this.state.lastName}
+                  type="text"
+                  variant="outlined"
+                  onChange={event => { this.setState({ lastName: event.target.value }) }}
+                />
+              </Grid>
+            </Grid>
+            <TextField
+              label="Email"
+              value={this.state.email}
+              type="text"
+              variant="outlined"
+              onChange={event => { this.setState({ email: event.target.value }) }}
+            />
+            <TextField
+              label="Username"
+              value={this.state.username}
+              type="text"
+              variant="outlined"
+              onChange={event => { this.setState({ username: event.target.value }) }}
+            />
+            <TextField
+              label="Password"
+              value={this.state.password}
+              type="password"
+              variant="outlined"
+              onChange={event => { this.setState({ password: event.target.value }) }}
+            />
+            <Button
+              type="submit"
+              color="primary"
+              variant="outlined"
+              size="large"
+              onClick={event => {
+                event.preventDefault();
+                const { firstName, lastName, email, username, password } = this.state;
+                if (!firstName || !lastName || !email || !email || !username || !password) {
+                  this.setState({ errorMessage: "All fields are required" });
+                } else {
+                  this.props.signup({ firstName, lastName, email, username, password });
+                }
+              }}
+              fullWidth
+            >
+              Sign Up
           </Button>
-        </form>
+          </form>
+
+        </div>
       </div>
     )
   }

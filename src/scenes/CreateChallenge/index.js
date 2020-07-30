@@ -51,7 +51,7 @@ class CreateChallenge extends React.Component {
         }
         else {
           for (var d in data.result.tracks) {
-            songOptions.push(data.result.tracks[d].artistName + ' - ' +  data.result.tracks[d].name);
+            songOptions.push(data.result.tracks[d].artistName + ' - ' + data.result.tracks[d].name);
           }
           this.setState({ songOptions });
         }
@@ -160,7 +160,7 @@ class CreateChallenge extends React.Component {
                 this.setState({ inputError: "Please choose 3 songs to start a challenge" });
               } else {
                 window.alert(`Creating your challenge with your choices: ${this.state.songsChosen.join(', ')}`);
-                this.props.createChallenge(this.state.songsChosen, "0"); // TODO: id
+                this.props.createChallenge(this.state.songsChosen, "5f1bc9657496371a8406490b", this.props.auth.token); // TODO REMOVE THE ID WHEN GET USERS BECOMES AVAILABLE ON THE BACKEND
                 this.props.history.push('/challenge/list');
               }
             }}
@@ -173,8 +173,14 @@ class CreateChallenge extends React.Component {
   }
 };
 
+function mapStateToProps(state) {
+  return {
+    auth: state.auth
+  }
+}
+
 const mapDispatchToProps = {
   createChallenge: challengeActions.createChallenge
 }
 
-export default connect(undefined, mapDispatchToProps)(CreateChallenge);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateChallenge);

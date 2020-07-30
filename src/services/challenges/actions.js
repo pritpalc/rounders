@@ -15,26 +15,24 @@ function getChallenges(token) {
   };
 }
 
-function createChallenge(songs, id) {
+function createChallenge(songs, id, token) {
   return (dispatch) => {
     dispatch(request());
 
-    const trackOptions = [
-      {
-        "artistName": songs[0].split(" - ")[0],
-        "trackName": songs[0].split(" - ")[1]
-      },
-      {
-        "artistName": songs[1].split(" - ")[0],
-        "trackName": songs[1].split(" - ")[1]
-      }
-    ]
+    const trackOptions = [];
+    songs.forEach(song => {
+      const tokens = song.split(" - ");
+      trackOptions.push({
+        artistName: tokens[0],
+        trackName: tokens[1]
+      })
+    });
 
-    challengeServices.createChallenge({ trackOptions: trackOptions, challengedTo: id })
+    challengeServices.createChallenge({ trackOptions, challengedTo: id }, token)
       .then(
         res => {
           dispatch(success(res));
-          dispatch(getChallenges());
+          dispatch(getChallenges(token));
         },
         err => dispatch(failure(err))
       );
@@ -46,11 +44,11 @@ function createChallenge(songs, id) {
 }
 
 
-function getChallengesForUser(id) {
+function getMyChallenges(token) {
   return (dispatch) => {
     dispatch(request());
 
-    challengeServices.getChallengesForUser()
+    challengeServices.getMyChallenges(token)
       .then(
         res => dispatch(success(res)),
         err => dispatch(failure(err))
@@ -81,6 +79,6 @@ function acceptChallenge() {
 export const challengeActions = {
   createChallenge,
   getChallenges,
-  getChallengesForUser,
+  getMyChallenges,
   acceptChallenge
 };
