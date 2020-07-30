@@ -1,5 +1,14 @@
 #profile-wrapper {
   width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+#profile-info-list {
+  width: 90%;
+  margin: auto;
+  padding: 0 !important;
 }
 
 #profileHeader {

@@ -73,16 +73,18 @@ function App(props) {
       <BrowserRouter>
         <div id="app-wrapper">
           <AppBar />
-          <Switch>
-            <Route exact match path="/login" component={Login} />
-            <Route exact match path="/signup" component={SignUp} />
-            <Route exact match path="/home" component={MainPage} />
-            {!auth.token && <Redirect to="/home" />}
-            <Route exact match path="/profile" component={Profile} />
-            <Route exact match path="/challenge/create" component={CreateChallenge} />
-            <Route exact match path="/challenge/list" component={ListChallenges} />
-            <Redirect to="/home" />
-          </Switch>
+          <main id="content-wrapper">
+            <Switch>
+              <Route exact match path="/login" component={Login} />
+              <Route exact match path="/signup" component={SignUp} />
+              <Route exact match path="/home" component={MainPage} />
+              {!auth.token && <Redirect to="/home" />}
+              <Route exact match path="/profile" component={Profile} />
+              <Route exact match path="/challenge/create" component={CreateChallenge} />
+              <Route exact match path="/challenge/list" component={ListChallenges} />
+              <Redirect to="/home" />
+            </Switch>
+          </main>
         </div>
       </BrowserRouter>
     </ThemeProvider >

@@ -81,10 +81,15 @@ class ListChallenges extends React.Component {
 
   render() {
     return (
-      <Grid container
+      <Grid
+        container
         justify="center"
         alignContent="center"
         spacing={3}
+        style={{
+          height: "100%",
+          width: "100%"
+        }}
       >
         {this.renderLists()}
       </Grid>

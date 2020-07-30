@@ -26,7 +26,7 @@ class Profile extends React.Component {
     if (Object.keys(challenges).length > 0 && challenges.constructor === Object) {
       const completed = this.getTotalChallenges(challenges)
       const victories = 1
-      const winRate = victories/completed * 100
+      const winRate = victories / completed * 100
       return (
         <div className="flex_center_space">
           <div className="stas">
@@ -67,7 +67,7 @@ class Profile extends React.Component {
     const user = this.props.auth.user;
     return (
       <div className="nav">
-        <ul>
+        <ul id="profile-info-list">
           <ListItem>
             <p id="subheading">
               Name:
@@ -87,22 +87,23 @@ class Profile extends React.Component {
   render() {
     const user = this.props.auth.user;
     return (
-        <div id="profile-wrapper">
-          {this.getProfileHeader()}
-          <Avatar className="stat-summary-avatar">
-            {user.firstName.charAt(0)}{user.lastName.charAt(0)}
-          </Avatar>
-          {this.getChallengeInfo()}
-          {this.getProfileInfo()}
-        </div>
+      <div id="profile-wrapper">
+        {this.getProfileHeader()}
+        <Avatar className="stat-summary-avatar">
+          {user.firstName.charAt(0)}{user.lastName.charAt(0)}
+        </Avatar>
+        {/* {this.getChallengeInfo()} */}
+        {this.getProfileInfo()}
+      </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { 
+  return {
     auth: state.auth,
-    challenges: state.getChallengesForUser }
+    challenges: state.getChallengesForUser
+  }
 }
 
 const mapDispatchToProps = {

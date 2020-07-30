@@ -20,10 +20,17 @@
   box-sizing: border-box;
   min-height: calc(100vh);
   padding-top: var(--app-bar-height);
-  padding-bottom: var(--footer-height);
 }
 
 /* Utils CSS classes */
 .link-no-text-decoration {
   text-decoration: none;
+}
+
+#content-wrapper {
+  width: 100vw;
+  height: 80vh; /*For child elements to have a parent with a set height*/
+  min-height: calc(100vh - var(--app-bar-height));
+  display: flex;
+  justify-content: center;
 }
