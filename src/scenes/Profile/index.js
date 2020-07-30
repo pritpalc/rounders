@@ -34,7 +34,7 @@ class Profile extends React.Component {
     if (challenges && challenges.length > 0) {
       totalChallenges = challenges.length;
       victories = 1;
-      winRate = victories / totalChallenges * 100;
+      winRate = parseFloat(victories / totalChallenges * 100).toFixed(0);
     }
     return (
       <div className="flex_center_space">

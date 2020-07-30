@@ -21,7 +21,7 @@ function createChallenge(songs, id, token) {
 
     const trackOptions = [];
     songs.forEach(song => {
-      const tokens = song.split(" - ");
+      const tokens = song.split("-");
       trackOptions.push({
         artistName: tokens[0],
         trackName: tokens[1]
