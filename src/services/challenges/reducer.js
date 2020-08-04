@@ -1,10 +1,6 @@
 import { constants } from './constants';
+import { STATUS } from '../utils/reducers';
 
-export const STATUS = {
-  request: 'requesting',
-  success: 'success',
-  failed: 'failed'
-};
 
 export const getChallenges = (state = {}, action) => {
   switch (action.type) {

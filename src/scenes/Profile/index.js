@@ -6,7 +6,7 @@ import { Avatar, ListItem, Divider } from '@material-ui/core';
 import Loader from '../../components/Loader';
 // Services and utils
 import { challengeActions } from '../../services/challenges/actions';
-import { STATUS } from '../../services/challenges/reducer';
+import { STATUS } from '../../services/utils/reducers';
 // Style
 import './styles.css';
 
