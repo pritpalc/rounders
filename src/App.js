@@ -20,6 +20,7 @@ import SignUp from './scenes/SignUp';
 // Style
 import './App.css';
 import ListChallenges from './scenes/ListChallenges';
+import ChallengeDetails from './scenes/ChallengeDetails';
 import Profile from './scenes/Profile';
 
 const theme = createMuiTheme({
@@ -82,6 +83,7 @@ function App(props) {
               <Route exact match path="/profile" component={Profile} />
               <Route exact match path="/challenge/create" component={CreateChallenge} />
               <Route exact match path="/challenge/list" component={ListChallenges} />
+              <Route path="/challengeDetails/:challengeId" component={ChallengeDetails} />
               <Redirect to="/home" />
             </Switch>
           </main>

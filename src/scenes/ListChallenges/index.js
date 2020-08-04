@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Typography } from '@material-ui/core';
+import {Link} from 'react-router-dom';
+import { Grid, Typography, Button, Box, Snackbar} from '@material-ui/core';
 // Components
 import Loader from '../../components/Loader';
 // Services and utils
@@ -37,19 +38,27 @@ class ListChallenges extends React.Component {
     // Check if there are any available challenges
     if (Object.keys(challenges).length > 0) {
       return challenges.map((challenge, index) => {
+        const challengeId = challenge._id;
         const auth = this.props.auth;
         const userId = (auth.user && auth.user._id) || "";
+        const challengedAt = challenge.challengedAt;
         const challengedBy = challenge.challengedBy;
         const challengedTo = challenge.challengedTo;
+        const acceptedAt = challenge.acceptedAt;
+        const submissions = challenge.submissions;
         const userCreatedChallenge = userId === challengedBy._id;
         return (
           <Grid
             item
             xs={3}
             className="list-challenges-item"
-            key={index}
+            key={index} 
           >
-            <Typography color="primary">
+            <Link to={{pathname:`/challengeDetails/${challengeId}`, state:{challenge:{challenge}}}}  style={{display:"flex", flexDirection:"row-reverse"}} >View Detail</Link>
+            <Typography>
+              {()=> {if (submissions){return "Submitted";} else if(acceptedAt) {return "Accepted";}}}
+            </Typography>
+            <Typography color="primary" style={{paddingTop:5}}>
               {userCreatedChallenge ?
                 `You have challenged ${challengedTo.firstName} ${challengedTo.lastName} with these songs options:`
                 :
@@ -67,6 +76,13 @@ class ListChallenges extends React.Component {
                 )
               })}
             </ul>
+            <span style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+              {new Intl.DateTimeFormat("en", {
+                month: "long",
+                day: "2-digit",
+                year: "numeric"
+              }).format(Date.parse(challengedAt))}
+            </span>
           </Grid>
         );
       });

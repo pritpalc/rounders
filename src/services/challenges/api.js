@@ -27,6 +27,19 @@ export function getMyChallenges(token) {
     .then(handleResponse);
 }
 
+export function getChallenge(id,token) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    }
+  };
+
+  return fetch(`${BASE_API}/challenge/${id}`, requestOptions)
+    .then(handleResponse);
+}
+
 export function createChallenge(challenge, token) {
   const requestOptions = {
     method: "POST",
@@ -41,12 +54,15 @@ export function createChallenge(challenge, token) {
     .then(handleResponse);
 }
 
-export function acceptChallenge(id) {
+export function acceptChallenge(id, track, token) {
+  console.log(token);
   const requestOptions = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-    }
+      "Authorization": `Bearer ${token.token}`,
+      "Content-Type": "application/json"
+    },
+    body:JSON.stringify({"acceptedTrackIndex": track})
   };
 
   return fetch(`${BASE_API}/challenges/${id}/accept`, requestOptions)
@@ -57,4 +73,6 @@ export const challengeServices = {
   getChallenges,
   getMyChallenges,
   createChallenge,
+  acceptChallenge,
+  getChallenge
 };

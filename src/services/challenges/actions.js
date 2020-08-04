@@ -60,11 +60,27 @@ function getMyChallenges(token) {
   function failure(error) { return { type: constants.CHALLENGES_FAILURE, error } }
 }
 
-function acceptChallenge() {
+function getChallenge(id, token) {
   return (dispatch) => {
     dispatch(request());
 
-    challengeServices.acceptChallenge()
+    challengeServices.getChallenge(id, token)
+      .then(
+        res => dispatch(success(res)),
+        err => dispatch(failure(err))
+      );
+  };
+
+  function request() { return { type: constants.GET_CHALLENGE_REQUEST } }
+  function success(res) { return { type: constants.GET_CHALLENGE_SUCCESS, res } }
+  function failure(error) { return { type: constants.GET_CHALLENGE_FAILURE, error } }
+}
+
+function acceptChallenge(id, track, token) {
+  return (dispatch) => {
+    dispatch(request());
+
+    challengeServices.acceptChallenge(id, track, token)
       .then(
         () => dispatch(success()),
         err => dispatch(failure(err))
@@ -80,5 +96,6 @@ export const challengeActions = {
   createChallenge,
   getChallenges,
   getMyChallenges,
-  acceptChallenge
+  acceptChallenge,
+  getChallenge
 };

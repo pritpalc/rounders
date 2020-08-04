@@ -46,6 +46,27 @@ export const getMyChallenges = (state = {}, action) => {
   }
 };
 
+export const getChallenge = (state = {}, action) => {
+  switch (action.type) {
+    case constants.GET_CHALLENGE_REQUEST:
+      console.log("setting staustus to request");
+      return {
+        status: STATUS.request
+      };
+    case constants.GET_CHALLENGE_SUCCESS:
+      return {
+        data: action.res,
+        status: STATUS.success
+      };
+    case constants.GET_CHALLENGE_FAILURE:
+      return {
+        status: STATUS.failed
+      };
+    default:
+      return state;
+  }
+};
+
 export const createChallenge = (state = {}, action) => {
   switch (action.type) {
     case constants.CREATE_CHALLENGE_REQUEST:
@@ -58,6 +79,26 @@ export const createChallenge = (state = {}, action) => {
         status: STATUS.success
       };
     case constants.CREATE_CHALLENGE_FAILURE:
+      return {
+        status: STATUS.failed
+      };
+    default:
+      return state;
+  }
+};
+
+export const acceptChallenge = (state = {}, action) => {
+  switch (action.type) {
+    case constants.ACCEPT_CHALLENGE_REQUEST:
+      return {
+        status: STATUS.request
+      };
+    case constants.ACCPET_CHALLENGE_SUCCESS:
+      return {
+        data: action.res,
+        status: STATUS.success
+      };
+    case constants.ACCPET_CHALLENGE_FAILURE:
       return {
         status: STATUS.failed
       };
