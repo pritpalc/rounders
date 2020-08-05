@@ -24,23 +24,39 @@ const FAKE_SONG_LIST = [
   "Clint Mansell - Lux Aeterna"
 ];
 
+const FAKE_USER_LIST = [
+  "Beyonce - Formation",
+  "Megan Thee Stallion - Savage",
+  "Doja Cat - Like That",
+  "Billie Eillish - ilomilo",
+  "Cauty - Ta To Gucci",
+  "Rihanna -Umbrella",
+  "Clint Mansell - Lux Aeterna"
+];
+
 class CreateChallenge extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      input: "",
-      inputError: "",
+      songInput: "",
+      userInput: "",
+      userInputError: "",
+      songInputError: "",
       songOptions: FAKE_SONG_LIST,
+      userOptions: [],
+      userChosen: "",
       songsChosen: [],
-      menuIsVisible: false
+      songMenuIsVisible: false,
+      userMenuIsVisible: false
     }
   }
 
   componentDidUpdate(prevProps, prevInput) {
-    if (prevInput.input !== this.state.input && this.state.input !== '') {
+    // Update songs
+    if (prevInput.songInput !== this.state.songInput && this.state.songInput !== '') {
       let songOptions = [];
-      lastfm.search({ q: `${this.state.input}` }, (err, data) => {
+      lastfm.search({ q: `${this.state.songInput}` }, (err, data) => {
         // Add Fake Data if non 200 response
         if (err) {
           // console.error(err)
@@ -56,6 +72,14 @@ class CreateChallenge extends React.Component {
           this.setState({ songOptions });
         }
       })
+    }
+
+    // Update users
+    if (prevInput.userInput !== this.state.userInput && this.state.userInput !== '') {
+      let userOptions = [];
+      userOptions.push("Joe");
+      userOptions.push("Biden");
+      this.setState({ userOptions })
     }
   }
 
@@ -83,9 +107,47 @@ class CreateChallenge extends React.Component {
               this.setState((state) => {
                 return {
                   songsChosen: state.songsChosen.concat(s),
-                  menuIsVisible: state.songsChosen.length === 2 ? false : state.menuIsVisible,
-                  input: state.songsChosen.length === 2 ? "" : state.input,
-                  inputError: ""
+                  songMenuIsVisible: state.songsChosen.length === 2 ? false : state.songMenuIsVisible,
+                  songInput: state.songsChosen.length === 2 ? "" : state.songInput,
+                  songInputError: ""
+                }
+              });
+            }}
+          >
+            {`${s}${chosen ? " (chosen)" : ""}`}
+          </MenuItem>
+        )
+      })
+    )
+  }
+
+  getUserOptions = () => {
+    if (this.state.userOptions.length === 0) {
+      return (
+        <MenuItem
+          color="primary"
+          disabled
+        >
+          0 user matches
+        </MenuItem>
+      )
+    }
+    return (
+      this.state.userOptions.map(s => {
+        const chosen = this.state.userChosen.includes(s);
+        return (
+          <MenuItem
+            value={s}
+            key={s}
+            color="primary"
+            disabled={chosen}
+            onClick={(event) => {
+              this.setState((state) => {
+                return {
+                  userChosen: state.userChosen.concat(s),
+                  userMenuIsVisible: state.userChosen.length === 1 ? false : state.userMenuIsVisible,
+                  userInput: state.userChosen.length === 2 ? "" : state.userInput,
+                  userInputError: ""
                 }
               });
             }}
@@ -111,7 +173,8 @@ class CreateChallenge extends React.Component {
   }
 
   render() {
-    const disableInput = this.state.songsChosen.length === 3;
+    const disableSongInput = this.state.songsChosen.length === 3;
+    const disableUserInput = this.state.userChosen.length === 1;
     return (
       <div id="create-challenge-wrapper">
         <Typography id="create-challenge-header" variant="h1">Challenge</Typography>
@@ -124,31 +187,63 @@ class CreateChallenge extends React.Component {
         <div id="song-filter-wrapper">
           <TextField
             type="text"
-            placeholder={disableInput ? "Great! You've chosen all your songs!" : `Search for the ${this.getSongOrdinalNumber()} song to include`}
-            value={this.state.input}
-            error={Boolean(this.state.inputError)}
-            helperText={this.state.inputError}
-            disabled={disableInput}
+            placeholder={disableSongInput ? "Great! You've chosen all your songs!" : `Search for the ${this.getSongOrdinalNumber()} song to include`}
+            value={this.state.songInput}
+            error={Boolean(this.state.songInputError)}
+            helperText={this.state.songInputError}
+            disabled={disableSongInput}
             onChange={(event) => {
               this.setState({
-                input: event.target.value,
-                inputError: ""
+                songInput: event.target.value,
+                songInputError: ""
               })
             }}
             color="primary"
             variant="outlined"
-            onClick={(event) => { !disableInput && this.setState({ menuIsVisible: true }) }}
+            onClick={(event) => { !disableSongInput && this.setState({ songMenuIsVisible: true }) }}
             classes={{
               root: "song-filter-root",
               input: "song-filter-input"
             }}
             inputProps={{
-              className: disableInput ? "disabled-input" : ""
+              className: disableSongInput ? "disabled-input" : ""
             }}
           />
-          {this.state.menuIsVisible &&
+          {this.state.songMenuIsVisible &&
             <div id="song-menu">
               {this.getSongOptions()}
+            </div>
+          }
+        <ul id="users-chosen-list">
+          <li>{this.state.userChosen}</li>
+        </ul>
+          <TextField
+            type="text"
+            placeholder={disableUserInput ? "Great! You've chosen your opponent" : `Search for an opponent to challenge`}
+            value={this.state.userInput}
+            error={Boolean(this.state.userInputError)}
+            helperText={this.state.userInputError}
+            disabled={disableUserInput}
+            onChange={(event) => {
+              this.setState({
+                userInput: event.target.value,
+                userInputError: ""
+              })
+            }}
+            color="primary"
+            variant="outlined"
+            onClick={(event) => { !disableUserInput && this.setState({ userMenuIsVisible: true }) }}
+            classes={{
+              root: "user-filter-root",
+              input: "user-filter-input"
+            }}
+            inputProps={{
+              className: disableUserInput ? "disabled-input" : ""
+            }}
+          />
+          {this.state.userMenuIsVisible &&
+            <div id="user-menu">
+              {this.getUserOptions()}
             </div>
           }
           <Button
@@ -157,9 +252,11 @@ class CreateChallenge extends React.Component {
             variant="contained"
             onClick={(event) => {
               if (this.state.songsChosen.length !== 3) {
-                this.setState({ inputError: "Please choose 3 songs to start a challenge" });
+                this.setState({ songInputError: "Please choose 3 songs to start a challenge" });
+              } else if (this.state.userChosen.length !== 1) {
+                this.setState({ userInputError: "Please select an opponent to challenge" });
               } else {
-                window.alert(`Creating your challenge with your choices: ${this.state.songsChosen.join(', ')}`);
+                window.alert(`Creating your challenge with your song choices: ${this.state.songsChosen.join(', ')} and opponent: ${this.state.userChosen}`);
                 this.props.createChallenge(this.state.songsChosen, "5f1bc9657496371a8406490b", this.props.auth.token); // TODO REMOVE THE ID WHEN GET USERS BECOMES AVAILABLE ON THE BACKEND
                 this.props.history.push('/challenge/list');
               }
