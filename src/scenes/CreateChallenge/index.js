@@ -9,22 +9,13 @@ import {
 import './style.css';
 import { connect } from 'react-redux';
 import { challengeActions } from '../../services/challenges/actions';
+import { userActions } from '../../services/users/actions';
 
 const LastFM = require('last-fm')
 const LAST_FM_API_KEY = process.env.REACT_APP_LAST_FM_API_KEY;
 const lastfm = new LastFM(LAST_FM_API_KEY, { userAgent: 'MyApp/1.0.0 (http://localhost:3000/)' })
 
 const FAKE_SONG_LIST = [
-  "Beyonce - Formation",
-  "Megan Thee Stallion - Savage",
-  "Doja Cat - Like That",
-  "Billie Eillish - ilomilo",
-  "Cauty - Ta To Gucci",
-  "Rihanna -Umbrella",
-  "Clint Mansell - Lux Aeterna"
-];
-
-const FAKE_USER_LIST = [
   "Beyonce - Formation",
   "Megan Thee Stallion - Savage",
   "Doja Cat - Like That",
@@ -77,9 +68,12 @@ class CreateChallenge extends React.Component {
     // Update users
     if (prevInput.userInput !== this.state.userInput && this.state.userInput !== '') {
       let userOptions = [];
-      userOptions.push("Joe");
-      userOptions.push("Biden");
-      this.setState({ userOptions })
+      const users = this.props.searchUser(this.state.userInput)
+      for (var u in users) {
+        userOptions.push(users[u].username );
+      }
+      userOptions.push("rogerrabbit")
+      this.setState({ userOptions });
     }
   }
 
@@ -257,7 +251,7 @@ class CreateChallenge extends React.Component {
                 this.setState({ userInputError: "Please select an opponent to challenge" });
               } else {
                 window.alert(`Creating your challenge with your song choices: ${this.state.songsChosen.join(', ')} and opponent: ${this.state.userChosen}`);
-                this.props.createChallenge(this.state.songsChosen, "5f1bc9657496371a8406490b", this.props.auth.token); // TODO REMOVE THE ID WHEN GET USERS BECOMES AVAILABLE ON THE BACKEND
+                this.props.createChallenge(this.state.songsChosen, "5f1d2aad57337d140aa86bc2", this.props.auth.token); // TODO REMOVE THE ID WHEN GET USERS BECOMES AVAILABLE ON THE BACKEND
                 this.props.history.push('/challenge/list');
               }
             }}
@@ -272,12 +266,14 @@ class CreateChallenge extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
+    searchUser: state.searchUser,
   }
 }
 
 const mapDispatchToProps = {
-  createChallenge: challengeActions.createChallenge
+  createChallenge: challengeActions.createChallenge,
+  searchUser: userActions.searchUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateChallenge);

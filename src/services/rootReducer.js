@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import { auth } from './users/reducers/auth';
 import { signup } from './users/reducers/signup';
+import { searchUsers } from './users/reducers/searchUsers';
 import { createChallenge, getChallenges, getMyChallenges } from './challenges/reducer';
 
 const rootReducer = combineReducers({
@@ -9,7 +10,8 @@ const rootReducer = combineReducers({
   signup,
   createChallenge,
   getChallenges,
-  getMyChallenges
+  getMyChallenges,
+  searchUsers
 });
 
 export default rootReducer;
