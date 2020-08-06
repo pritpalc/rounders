@@ -25,21 +25,28 @@ let initialUsers = [
     }
 ];
 
+export const STATUS = {
+  request: 'requesting',
+  success: 'success',
+  failed: 'failed'
+};
+
+
 export const searchUsers = (state = { users: initialUsers }, action) => {
   switch (action.type) {
     case constants.SEARCH_REQUEST:
+      console.log("setting staustus to request");
       return {
-        requesting: true
+        status: STATUS.request
       };
     case constants.SEARCH_SUCCESS:
-      let newState = { ...state };
-      newState.succeeded = true;
-      newState.challenges.push({ users: action.users });
-
-      return newState;
+      return {
+        data: action.res,
+        status: STATUS.success
+      };
     case constants.SEARCH_FAILURE:
       return {
-        failed: true
+        status: STATUS.failed
       };
     default:
       return state;
