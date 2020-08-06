@@ -106,3 +106,23 @@ export const acceptChallenge = (state = {}, action) => {
       return state;
   }
 };
+
+export const voteChallenge = (state = {}, action) => {
+  switch (action.type) {
+    case constants.VOTE_CHALLENGE_REQUEST:
+      return {
+        status: STATUS.request
+      };
+    case constants.VOTE_CHALLENGE_SUCCESS:
+      return {
+        data: action.res,
+        status: STATUS.success
+      };
+    case constants.VOTE_CHALLENGE_FAILURE:
+      return {
+        status: STATUS.failed
+      };
+    default:
+      return state;
+  }
+};

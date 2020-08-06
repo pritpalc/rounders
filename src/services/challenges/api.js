@@ -69,10 +69,25 @@ export function acceptChallenge(id, track, token) {
     .then(handleResponse);
 }
 
+export function voteChallenge(challengeId, userId, token) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token.token}`,
+      "Content-Type": "application/json"
+    },
+    body:JSON.stringify({"for": userId})
+  };
+
+  return fetch(`${BASE_API}/challenges/${challengeId}/votes`, requestOptions)
+    .then(handleResponse);
+}
+
 export const challengeServices = {
   getChallenges,
   getMyChallenges,
   createChallenge,
   acceptChallenge,
-  getChallenge
+  getChallenge,
+  voteChallenge
 };
