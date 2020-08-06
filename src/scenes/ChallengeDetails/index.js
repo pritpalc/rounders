@@ -159,6 +159,9 @@ class ChallengeDetails extends React.Component {
       else 
         link2 = challenge.submissions[0].submissionUri;
     }
+    let challengedByVotes = challenge.votes ? challenge.votes.filter(v => v.for === challenge.challengedBy._id).length : 0;
+    let challengedToVotes = challenge.votes ? challenge.votes.filter(v => v.for === challenge.challengedTo._id).length : 0;
+
     return (
     <div>
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>
@@ -166,13 +169,13 @@ class ChallengeDetails extends React.Component {
           <Typography color="primary" style={{alignSelf:"center", paddingTop:"1rem"}}>{`${challenge.challengedBy.firstName} ${challenge.challengedBy.lastName}'s Submission`}</Typography>
           <ReactPlayer url={link1} className="video"/>
           <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challenger")}></img></Button>
-          <Typography style={{alignSelf:"center"}}>23</Typography>
+          <Typography style={{alignSelf:"center"}}>{challengedByVotes}</Typography>
         </div>
         <div style={{display:"flex", flexDirection:"column", justifyContent:"flex-center"}}> 
         <Typography color="primary" style={{alignSelf:"center", paddingTop:"1rem"}}>{`${challenge.challengedTo.firstName} ${challenge.challengedTo.lastName}'s Submission`}</Typography>
           <ReactPlayer url={link2} className="video"/>  
           <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challengee")}></img></Button>
-          <Typography style={{alignSelf:"center"}}>34</Typography>
+          <Typography style={{alignSelf:"center"}}>{challengedToVotes}</Typography>
         </div>
       </div>
     </div>)
@@ -184,6 +187,7 @@ class ChallengeDetails extends React.Component {
     if (role == "challengee")
       voteFor = challenge.challengedTo._id;
     this.props.voteChallenge(challenge._id, voteFor, this.props.auth);
+    window.location.reload(false);
   }
 }
 
