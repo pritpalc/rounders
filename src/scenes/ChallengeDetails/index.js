@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import { challengeActions } from '../../services/challenges/actions';
 import { STATUS } from '../../services/challenges/reducer';
 import Loader from '../../components/Loader';
-import Submissions from '../../components/Submissions'
 import ReactPlayer from "react-player"
 import voteIcon from './assets/voteIcon.png';
 
