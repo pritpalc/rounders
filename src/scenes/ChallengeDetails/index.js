@@ -80,7 +80,7 @@ class ChallengeDetails extends React.Component {
       <div>
         {submissions.length>0? this.displaySubmissions(challenge) : ""}
       </div>
-      <Link to="/challenge/list" className="link-no-text-decoration" style={{position:"absolute", right:"50px"}}>
+      <Link to="/challenge/list" className="link-no-text-decoration" style={{position:"absolute", right:"50px", bottom:"50px"}}>
         <Button size="small" variant="outlined" color="primary">Go Back</Button>
       </Link>
     </Grid>
