@@ -16,7 +16,7 @@ class AppBar extends React.Component {
     return (
       <div id="app-bar">
         <Link
-          to={userIsLoggedIn ? "/challenge/list" : "/home"}
+          to={userIsLoggedIn ? "/challenges" : "/home"}
           className="link-no-text-decoration"
         >
           <span id="logo-text">rounders</span>

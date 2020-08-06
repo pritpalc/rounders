@@ -6,6 +6,7 @@ import {
   Button,
   Grid
 } from '@material-ui/core';
+import {Link} from 'react-router-dom';
 // Style
 import './style.css';
 import { connect } from 'react-redux';
@@ -48,7 +49,7 @@ class ChallengeDetails extends React.Component {
       xs={12}
     >
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-      <Typography color="primary" style={{paddingTop:5}}>
+      <Typography color="primary" variant="h5" style={{fontWeight:"bold"}}>
         {userCreatedChallenge ?
           `You have challenged ${challengedTo.firstName} ${challengedTo.lastName} with these songs options:`
           :
@@ -76,9 +77,12 @@ class ChallengeDetails extends React.Component {
         })}
       </ul>
       <Typography color="primary"> Status: {status} </Typography>
-      <div >
+      <div>
         {submissions.length>0? this.displaySubmissions(challenge) : ""}
       </div>
+      <Link to="/challenge/list" className="link-no-text-decoration" style={{position:"absolute", right:"50px"}}>
+        <Button size="small" variant="outlined" color="primary">Go Back</Button>
+      </Link>
     </Grid>
     );
 };
@@ -100,8 +104,11 @@ class ChallengeDetails extends React.Component {
   }
 
   renderTrackOption = (challenge, status, index) => {
+    if (this.props.auth.user._id != challenge.challengedBy._id && this.props.auth.user._id != challenge.challengedTo._id)
+      return "";
     if (status == "Submitted"){
-      return ""
+      return (challenge.acceptedTrackIndex == index ? 
+        <Button size="small" color="primary">Submitted</Button> : "");
     } else if (status == "Accepted") {
       return (
       challenge.acceptedTrackIndex == index ? 
@@ -158,13 +165,13 @@ class ChallengeDetails extends React.Component {
         <div style={{display:"flex", flexDirection:"column", justifyContent:"flex-start"}}> 
           <Typography color="primary" style={{alignSelf:"center", paddingTop:"1rem"}}>{`${challenge.challengedBy.firstName} ${challenge.challengedBy.lastName}'s Submission`}</Typography>
           <ReactPlayer url={link1} className="video"/>
-          <img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challenger")}></img>
+          <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challenger")}></img></Button>
           <Typography style={{alignSelf:"center"}}>23</Typography>
         </div>
         <div style={{display:"flex", flexDirection:"column", justifyContent:"flex-center"}}> 
         <Typography color="primary" style={{alignSelf:"center", paddingTop:"1rem"}}>{`${challenge.challengedTo.firstName} ${challenge.challengedTo.lastName}'s Submission`}</Typography>
           <ReactPlayer url={link2} className="video"/>  
-          <img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challengee")}></img>
+          <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challengee")}></img></Button>
           <Typography style={{alignSelf:"center"}}>34</Typography>
         </div>
       </div>

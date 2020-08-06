@@ -1,0 +1,16 @@
+.list-challenges-item {
+  border: 1px solid var(--primary);
+  border-radius: var(--card-border-radius);
+  margin: 1rem !important;
+  padding: 1.5rem !important;
+}
+
+.track-options-list {
+  list-style-type: decimal;
+  width: 100%;
+  padding-left: 20px;
+}
+
+.track-options-list li {
+  margin-bottom: 0.25rem;
+}
