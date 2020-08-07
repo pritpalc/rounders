@@ -92,6 +92,22 @@ function acceptChallenge(id, track, token) {
   function failure(error) { return { type: constants.ACCPET_CHALLENGE_FAILURE, error } }
 }
 
+function submitChallenge(id, submissionUri, token) {
+  return (dispatch) => {
+    dispatch(request());
+
+    challengeServices.submitChallenge(id, submissionUri, token)
+      .then(
+        response => dispatch(success(response)),
+        err => dispatch(failure(err))
+      );
+  };
+
+  function request() { return { type: constants.SUBMIT_CHALLENGE_REQUEST } }
+  function success(response) { return { type: constants.SUBMIT_CHALLENGE_SUCCESS, response } }
+  function failure(error) { return { type: constants.SUBMIT_CHALLENGE_FAILURE, error } }
+}
+
 function voteChallenge(challengeId, userId, token) {
   return (dispatch) => {
     dispatch(request());
@@ -113,6 +129,7 @@ export const challengeActions = {
   getChallenges,
   getMyChallenges,
   acceptChallenge,
+  submitChallenge,
   getChallenge,
   voteChallenge
 };

@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
-import { Grid, Typography, Button, Box, Snackbar} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Grid, Typography } from '@material-ui/core';
 // Components
 import Loader from '../../components/Loader';
 // Services and utils
 import { challengeActions } from '../../services/challenges/actions';
-import { STATUS } from '../../services/challenges/reducer';
+import { STATUS } from '../../services/utils/reducers';
 // Style
 import './style.css';
 
@@ -39,8 +39,6 @@ class Challenges extends React.Component {
     if (Object.keys(challenges).length > 0) {
       return challenges.map((challenge, index) => {
         const challengeId = challenge._id;
-        const auth = this.props.auth;
-        const userId = (auth.user && auth.user._id) || "";
         const challengedAt = challenge.challengedAt;
         const challengedBy = challenge.challengedBy;
         const challengedTo = challenge.challengedTo;
@@ -51,14 +49,14 @@ class Challenges extends React.Component {
             item
             xs={3}
             className="list-challenges-item"
-            key={index} 
+            key={index}
           >
-            <Link to={{pathname:`/challengeDetails/${challengeId}`, state:{challenge:{challenge}}}}  style={{display:"flex", flexDirection:"row-reverse"}} >View Detail</Link>
+            <Link to={{ pathname: `/challengeDetails/${challengeId}`, state: { challenge: { challenge } } }} style={{ display: "flex", flexDirection: "row-reverse" }} >View Detail</Link>
             <Typography>
-              {()=> {if (submissions){return "Submitted";} else if(acceptedAt) {return "Accepted";}}}
+              {() => { if (submissions) { return "Submitted"; } else if (acceptedAt) { return "Accepted"; } }}
             </Typography>
-            <Typography color="primary" style={{paddingTop:5}}>
-                {challengedBy.firstName} {challengedBy.lastName} have challenged {challengedTo.firstName} {challengedTo.lastName} with these songs options:
+            <Typography color="primary" style={{ paddingTop: 5 }}>
+              {challengedBy.firstName} {challengedBy.lastName} have challenged {challengedTo.firstName} {challengedTo.lastName} with these songs options:
             </Typography>
             <ul className="track-options-list">
               {challenge.trackOptions.map(track => {
@@ -71,7 +69,7 @@ class Challenges extends React.Component {
                 )
               })}
             </ul>
-            <span style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+            <span style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
               {new Intl.DateTimeFormat("en", {
                 month: "long",
                 day: "2-digit",
@@ -103,12 +101,12 @@ class Challenges extends React.Component {
     const getChallengesResponse = this.props.getChallengesResponse;
     return (
       <div>
-        <Typography variant="h2" style={{fontWeight: "bold", textAlign:"center", paddingTop:"2rem"}}>Trending Challenges</Typography>
+        <Typography variant="h2" style={{ fontWeight: "bold", textAlign: "center", paddingTop: "2rem" }}>Trending Challenges</Typography>
         <Grid
           container
           justify="center"
           alignContent="center"
-          mt = {-20}
+          mt={-20}
           style={{
             height: "100%",
             width: "100%",

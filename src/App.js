@@ -17,12 +17,12 @@ import MainPage from './scenes/MainPage';
 import CreateChallenge from './scenes/CreateChallenge';
 import Login from './scenes/Login';
 import SignUp from './scenes/SignUp';
-// Style
-import './App.css';
-import Challenges from './scenes/Challenges';
 import ListChallenges from './scenes/ListChallenges';
+import Challenges from './scenes/Challenges';
 import ChallengeDetails from './scenes/ChallengeDetails';
 import Profile from './scenes/Profile';
+// Style
+import './App.css';
 
 const theme = createMuiTheme({
   palette: {

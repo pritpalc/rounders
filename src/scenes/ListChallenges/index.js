@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
-import { Grid, Typography, Button, Box, Snackbar} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Grid, Typography } from '@material-ui/core';
 // Components
 import Loader from '../../components/Loader';
 // Services and utils
 import { challengeActions } from '../../services/challenges/actions';
-import { STATUS } from '../../services/challenges/reducer';
+import { STATUS } from '../../services/utils/reducers';
 // Style
 import './style.css';
 
@@ -34,7 +34,7 @@ class ListChallenges extends React.Component {
   }
 
   renderLists = () => {
-    const challenges = this.state.challenges
+    const challenges = this.state.challenges;
     // Check if there are any available challenges
     if (Object.keys(challenges).length > 0) {
       return challenges.map((challenge, index) => {
@@ -52,15 +52,15 @@ class ListChallenges extends React.Component {
             item
             xs={3}
             className="list-challenges-item"
-            key={index} 
+            key={index}
           >
-            <Link to={{pathname:`/challengeDetails/${challengeId}`, state:{challenge:{challenge}}}}  style={{display:"flex", flexDirection:"row-reverse"}} >View Detail</Link>
+            <Link to={{ pathname: `/challengeDetails/${challengeId}`, state: { challenge: { challenge } } }} style={{ display: "flex", flexDirection: "row-reverse" }} >View Detail</Link>
             <Typography>
-              {()=> {if (submissions){return "Submitted";} else if(acceptedAt) {return "Accepted";}}}
+              {() => { if (submissions) { return "Submitted"; } else if (acceptedAt) { return "Accepted"; } }}
             </Typography>
-            <Typography color="primary" style={{padding:"5px"}}>
+            <Typography color="primary" style={{ padding: "5px" }}>
               {userCreatedChallenge ?
-                `You have challenged ${challengedTo.firstName} ${challengedTo.lastName} with these songs options:`
+                `You have challenged ${(challengedTo && challengedTo.firstName) || "N/A"} ${(challengedTo && challengedTo.lastName) || "N/A"} with these songs options:`
                 :
                 `${challengedBy.firstName} ${challengedBy.lastName} has challenged you with these songs options:`
               }
@@ -76,7 +76,7 @@ class ListChallenges extends React.Component {
                 )
               })}
             </ul>
-            <span style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+            <span style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
               {new Intl.DateTimeFormat("en", {
                 month: "long",
                 day: "2-digit",
@@ -108,12 +108,12 @@ class ListChallenges extends React.Component {
     const getMyChallengesResponse = this.props.getMyChallengesResponse;
     return (
       <div>
-        <Typography variant="h2" style={{fontWeight: "bold", textAlign:"center", paddingTop:"2rem"}}>My Challenges</Typography>
+        <Typography variant="h2" style={{ fontWeight: "bold", textAlign: "center", paddingTop: "2rem" }}>My Challenges</Typography>
         <Grid
           container
           justify="center"
           alignContent="center"
-          mt = {-20}
+          mt={-20}
           style={{
             height: "100%",
             width: "100%",

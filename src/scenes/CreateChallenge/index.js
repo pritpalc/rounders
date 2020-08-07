@@ -77,7 +77,7 @@ class CreateChallenge extends React.Component {
       this.props.getUsers(this.state.userInput, this.props.auth.token)
       const getUsersResponse = this.props.getUsersResponse;
       const users = getUsersResponse.data
-      this.setState ({
+      this.setState({
         userOptions: users
       })
     }
@@ -86,14 +86,14 @@ class CreateChallenge extends React.Component {
   getSongOptions = () => {
     if (this.state.songOptions.length === 0) {
       return (
-          <MenuItem
-            color="primary"
-            disabled
-          >
-            0 song matches
-          </MenuItem>
-        )
-      }
+        <MenuItem
+          color="primary"
+          disabled
+        >
+          0 song matches
+        </MenuItem>
+      )
+    }
     return (
       this.state.songOptions.map(s => {
         const chosen = this.state.songsChosen.includes(s);
@@ -220,9 +220,9 @@ class CreateChallenge extends React.Component {
               {this.getSongOptions()}
             </div>
           }
-        <ul id="users-chosen-list">
-          <li>{this.state.userChosen}</li>
-        </ul>
+          <ul id="users-chosen-list">
+            <li>{this.state.userChosen}</li>
+          </ul>
           <TextField
             type="text"
             placeholder={disableUserInput ? "Great! You've chosen your opponent" : `Search for an opponent to challenge`}
@@ -263,7 +263,7 @@ class CreateChallenge extends React.Component {
                 this.setState({ userInputError: "Please select an opponent to challenge" });
               } else {
                 window.alert(`Creating your challenge with your song choices: ${this.state.songsChosen.join(', ')} and opponent: ${this.state.userChosen}`);
-                this.props.createChallenge(this.state.songsChosen, this.state.userIDChosen, this.props.auth.token); // TODO REMOVE THE ID WHEN GET USERS BECOMES AVAILABLE ON THE BACKEND
+                this.props.createChallenge(this.state.songsChosen, this.state.userIDChosen, this.props.auth.token);
                 this.props.history.push('/challenge/list');
               }
             }}

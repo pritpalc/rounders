@@ -1,10 +1,6 @@
 import { constants } from './constants';
+import { STATUS } from '../utils/reducers';
 
-export const STATUS = {
-  request: 'requesting',
-  success: 'success',
-  failed: 'failed'
-};
 
 export const getChallenges = (state = {}, action) => {
   switch (action.type) {
@@ -99,6 +95,26 @@ export const acceptChallenge = (state = {}, action) => {
         status: STATUS.success
       };
     case constants.ACCPET_CHALLENGE_FAILURE:
+      return {
+        status: STATUS.failed
+      };
+    default:
+      return state;
+  }
+};
+
+export const submitChallenge = (state = {}, action) => {
+  switch (action.type) {
+    case constants.SUBMIT_CHALLENGE_REQUEST:
+      return {
+        status: STATUS.request
+      };
+    case constants.SUBMIT_CHALLENGE_SUCCESS:
+      return {
+        response: action.response,
+        status: STATUS.success
+      };
+    case constants.SUBMIT_CHALLENGE_FAILURE:
       return {
         status: STATUS.failed
       };
