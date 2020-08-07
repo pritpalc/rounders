@@ -49,8 +49,25 @@ function logout() {
   return { type: constants.LOGOUT };
 }
 
+function getUsers(user, token) {
+  return (dispatch) => {
+    dispatch(request());
+
+    userServices.getUsers(user, token)
+      .then(
+        res => dispatch(success(res)),
+        err => dispatch(failure(err))
+      );
+  };
+
+  function request() { return { type: constants.SEARCH_REQUEST } }
+  function success(res) { return { type: constants.SEARCH_SUCCESS, res } }
+  function failure(error) { return { type: constants.SEARCH_FAILURE, error } }
+}
+
 export const userActions = {
   login,
   signup,
-  logout
+  logout,
+  getUsers
 };

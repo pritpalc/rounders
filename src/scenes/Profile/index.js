@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Avatar, ListItem, Divider } from '@material-ui/core';
+import { Avatar, ListItem, Divider, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 // Reusable components
 import Loader from '../../components/Loader';
 // Services and utils
@@ -65,6 +66,9 @@ class Profile extends React.Component {
     const user = this.props.auth.user;
     return (
       <div id="profileHeader">
+        <Link to="/challenge/list" className="link-no-text-decoration" style={{position:"absolute", left:"100px"}}>
+          <Button size="medium" variant="outlined" color="primary">Manage My Challenges</Button>
+          </Link>
         <h2>{user.firstName} {user.lastName}</h2>
       </div>
     );
