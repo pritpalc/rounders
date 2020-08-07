@@ -49,19 +49,19 @@ function logout() {
   return { type: constants.LOGOUT };
 }
 
-function searchUser(user, token) {
+function getUsers(user, token) {
   return (dispatch) => {
     dispatch(request());
 
-    userServices.searchUser(user, token)
+    userServices.getUsers(user, token)
       .then(
         res => dispatch(success(res)),
         err => dispatch(failure(err))
       );
   };
 
-  function request(user) { return { type: constants.SEARCH_REQUEST, user: user } }
-  function success(user) { return { type: constants.SEARCH_SUCCESS, user: user } }
+  function request() { return { type: constants.SEARCH_REQUEST } }
+  function success(res) { return { type: constants.SEARCH_SUCCESS, res } }
   function failure(error) { return { type: constants.SEARCH_FAILURE, error } }
 }
 
@@ -69,5 +69,5 @@ export const userActions = {
   login,
   signup,
   logout,
-  searchUser
+  getUsers
 };

@@ -15,7 +15,6 @@ function login(email, password) {
     .then(handleResponse)
     .then((user) => {
       localStorage.setItem(SESSION_LS_KEY, JSON.stringify(user));
-      console.log(user)
       return user;
     });
 }
@@ -35,7 +34,7 @@ function logout() {
   localStorage.removeItem(SESSION_LS_KEY);
 }
 
-function searchUser(user, token) {
+function getUsers(user, token) {
   const requestOptions = {
     method: "GET",
     headers: { 
@@ -54,5 +53,5 @@ export const userServices = {
   login,
   signup,
   logout,
-  searchUser
+  getUsers
 };

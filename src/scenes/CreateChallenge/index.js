@@ -37,9 +37,17 @@ class CreateChallenge extends React.Component {
       songOptions: FAKE_SONG_LIST,
       userOptions: [],
       userChosen: "",
+      userIDChosen: "",
       songsChosen: [],
       songMenuIsVisible: false,
       userMenuIsVisible: false
+    }
+  }
+
+  componentDidMount() {
+    const { token } = this.props.auth;
+    if (token !== undefined) {
+      this.props.getUsers("a", token)
     }
   }
 
@@ -50,7 +58,6 @@ class CreateChallenge extends React.Component {
       lastfm.search({ q: `${this.state.songInput}` }, (err, data) => {
         // Add Fake Data if non 200 response
         if (err) {
-          // console.error(err)
           for (var s in FAKE_SONG_LIST) {
             songOptions.push(FAKE_SONG_LIST[s]);
           }
@@ -67,27 +74,26 @@ class CreateChallenge extends React.Component {
 
     // Update users
     if (prevInput.userInput !== this.state.userInput && this.state.userInput !== '') {
-      let userOptions = [];
-      const users = this.props.searchUser(this.state.userInput)
-      for (var u in users) {
-        userOptions.push(users[u].username );
-      }
-      userOptions.push("rogerrabbit")
-      this.setState({ userOptions });
+      this.props.getUsers(this.state.userInput, this.props.auth.token)
+      const getUsersResponse = this.props.getUsersResponse;
+      const users = getUsersResponse.data
+      this.setState ({
+        userOptions: users
+      })
     }
   }
 
   getSongOptions = () => {
     if (this.state.songOptions.length === 0) {
       return (
-        <MenuItem
-          color="primary"
-          disabled
-        >
-          0 song matches
-        </MenuItem>
-      )
-    }
+          <MenuItem
+            color="primary"
+            disabled
+          >
+            0 song matches
+          </MenuItem>
+        )
+      }
     return (
       this.state.songOptions.map(s => {
         const chosen = this.state.songsChosen.includes(s);
@@ -116,7 +122,7 @@ class CreateChallenge extends React.Component {
   }
 
   getUserOptions = () => {
-    if (this.state.userOptions.length === 0) {
+    if (this.state.userOptions === undefined) {
       return (
         <MenuItem
           color="primary"
@@ -126,27 +132,33 @@ class CreateChallenge extends React.Component {
         </MenuItem>
       )
     }
+
     return (
       this.state.userOptions.map(s => {
-        const chosen = this.state.userChosen.includes(s);
+        const chosen = this.state.userChosen.includes(s.username);
         return (
           <MenuItem
-            value={s}
-            key={s}
+            value={s.username}
+            key={s.username}
             color="primary"
             disabled={chosen}
             onClick={(event) => {
               this.setState((state) => {
                 return {
-                  userChosen: state.userChosen.concat(s),
-                  userMenuIsVisible: state.userChosen.length === 1 ? false : state.userMenuIsVisible,
-                  userInput: state.userChosen.length === 2 ? "" : state.userInput,
+                  userChosen: state.userChosen.concat(s.username),
+                  userIDChosen: state.userIDChosen.concat(s._id),
                   userInputError: ""
+                }
+              });
+              this.setState((state) => {
+                return {
+                  userMenuIsVisible: state.userChosen.length > 0 ? false : state.userMenuIsVisible,
+                  userInput: state.userChosen.length > 0 ? "" : state.userInput,
                 }
               });
             }}
           >
-            {`${s}${chosen ? " (chosen)" : ""}`}
+            {`${s.username}${chosen ? " (chosen)" : ""}`}
           </MenuItem>
         )
       })
@@ -168,7 +180,7 @@ class CreateChallenge extends React.Component {
 
   render() {
     const disableSongInput = this.state.songsChosen.length === 3;
-    const disableUserInput = this.state.userChosen.length === 1;
+    const disableUserInput = this.state.userChosen.length > 0;
     return (
       <div id="create-challenge-wrapper">
         <Typography id="create-challenge-header" variant="h1">Challenge</Typography>
@@ -247,11 +259,11 @@ class CreateChallenge extends React.Component {
             onClick={(event) => {
               if (this.state.songsChosen.length !== 3) {
                 this.setState({ songInputError: "Please choose 3 songs to start a challenge" });
-              } else if (this.state.userChosen.length !== 1) {
+              } else if (!(this.state.userChosen.length > 0)) {
                 this.setState({ userInputError: "Please select an opponent to challenge" });
               } else {
                 window.alert(`Creating your challenge with your song choices: ${this.state.songsChosen.join(', ')} and opponent: ${this.state.userChosen}`);
-                this.props.createChallenge(this.state.songsChosen, "5f1d2aad57337d140aa86bc2", this.props.auth.token); // TODO REMOVE THE ID WHEN GET USERS BECOMES AVAILABLE ON THE BACKEND
+                this.props.createChallenge(this.state.songsChosen, this.state.userIDChosen, this.props.auth.token); // TODO REMOVE THE ID WHEN GET USERS BECOMES AVAILABLE ON THE BACKEND
                 this.props.history.push('/challenge/list');
               }
             }}
@@ -267,13 +279,13 @@ class CreateChallenge extends React.Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    searchUser: state.searchUser,
+    getUsersResponse: state.getUsers,
   }
 }
 
 const mapDispatchToProps = {
   createChallenge: challengeActions.createChallenge,
-  searchUser: userActions.searchUser,
+  getUsers: userActions.getUsers,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateChallenge);

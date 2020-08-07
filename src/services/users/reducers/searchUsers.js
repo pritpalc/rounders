@@ -31,11 +31,9 @@ export const STATUS = {
   failed: 'failed'
 };
 
-
-export const searchUsers = (state = { users: initialUsers }, action) => {
+export const getUsers = (state = {}, action) => {
   switch (action.type) {
     case constants.SEARCH_REQUEST:
-      console.log("setting staustus to request");
       return {
         status: STATUS.request
       };
