@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactPlayer from "react-player"
 import {
   Typography,
   Button,
@@ -31,6 +30,18 @@ class ChallengeDetails extends React.Component {
     const { token } = this.props.auth;
     if (token !== undefined) {
       this.props.getChallenge(this.props.match.params.challengeId, token);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // Vote for a submission
+    const { token, match, voteChallengeResponse } = this.props;
+    if (prevProps.voteChallengeResponse.status === STATUS.request && voteChallengeResponse.status !== STATUS.request) {
+      if (voteChallengeResponse.status === STATUS.success) {
+        this.props.getChallenge(match.params.challengeId, token);
+      } else if (voteChallengeResponse.status === STATUS.failed) {
+        window.alert(`Unable to vote for this video. ${voteChallengeResponse.error}`);
+      }
     }
   }
 
@@ -104,6 +115,7 @@ class ChallengeDetails extends React.Component {
   };
 
   render() {
+    const { voteChallengeResponse } = this.props;
     return (
       this.props.getChallengeResponse.status === STATUS.success ?
         <Grid
@@ -114,6 +126,7 @@ class ChallengeDetails extends React.Component {
             position: "relative" // For loader to position itself
           }}
         >
+          {voteChallengeResponse.status === STATUS.request && <Loader />}
           {this.renderChallenge()}
         </Grid> : <Loader />
     )
@@ -211,7 +224,7 @@ class ChallengeDetails extends React.Component {
               src={link2}
               controls
             >
-              <p>Your browser doesn't support HTML5 video. Here is a <a href={link1}>link to the video</a> instead.</p>
+              <p>Your browser doesn't support HTML5 video. Here is a <a href={link2}>link to the video</a> instead.</p>
             </video>
             <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challengee")}></img></Button>
             <Typography style={{ alignSelf: "center" }}>{challengedToVotes}</Typography>
@@ -226,7 +239,7 @@ class ChallengeDetails extends React.Component {
     if (role === "challengee")
       voteFor = challenge.challengedTo._id;
     this.props.voteChallenge(challenge._id, voteFor, this.props.auth);
-    window.location.reload(false);
+    // window.location.reload(false); This statement was cancelling the voteChallenge request above so I've commented it out
   }
 }
 
@@ -236,7 +249,7 @@ function mapStateToProps(state) {
     auth: state.auth,
     getChallengeResponse: state.getChallenge,
     acceptChallenge: state.acceptChallenge,
-    voteChallenge: state.voteChallenge
+    voteChallengeResponse: state.voteChallenge
   }
 }
 
