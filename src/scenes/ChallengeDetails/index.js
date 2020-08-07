@@ -35,10 +35,10 @@ class ChallengeDetails extends React.Component {
 
   componentDidUpdate(prevProps) {
     // Vote for a submission
-    const { token, match, voteChallengeResponse } = this.props;
+    const { auth, match, voteChallengeResponse } = this.props;
     if (prevProps.voteChallengeResponse.status === STATUS.request && voteChallengeResponse.status !== STATUS.request) {
       if (voteChallengeResponse.status === STATUS.success) {
-        this.props.getChallenge(match.params.challengeId, token);
+        this.props.getChallenge(match.params.challengeId, auth.token);
       } else if (voteChallengeResponse.status === STATUS.failed) {
         window.alert(`Unable to vote for this video. ${voteChallengeResponse.error}`);
       }
