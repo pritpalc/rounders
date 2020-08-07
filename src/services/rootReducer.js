@@ -4,7 +4,7 @@ import { auth } from './users/reducers/auth';
 import { signup } from './users/reducers/signup';
 import uploadsReducer from './uploads/reducers';
 import { getUsers } from './users/reducers/searchUsers';
-import { createChallenge, getChallenges, getMyChallenges, getChallenge } from './challenges/reducer';
+import { createChallenge, getChallenges, getMyChallenges, getChallenge, submitChallenge } from './challenges/reducer';
 
 const rootReducer = combineReducers({
   auth,
@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
   getMyChallenges,
   uploads: uploadsReducer,
   getChallenge,
+  submitChallenge,
   getUsers
 });
 

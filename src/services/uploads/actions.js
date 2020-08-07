@@ -7,7 +7,7 @@ function postUploads(file, token) {
 
     uploadsServices.postUploads(file, token)
       .then(response => {
-        dispatch({ type: constants.POST_UPLOAD_SUCCESS, dataL: response.data });
+        dispatch({ type: constants.POST_UPLOAD_SUCCESS, data: response });
       })
       .catch(error => {
         dispatch({ type: constants.POST_UPLOAD_FAILURE, error });

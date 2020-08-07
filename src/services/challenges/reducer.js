@@ -103,6 +103,26 @@ export const acceptChallenge = (state = {}, action) => {
   }
 };
 
+export const submitChallenge = (state = {}, action) => {
+  switch (action.type) {
+    case constants.SUBMIT_CHALLENGE_REQUEST:
+      return {
+        status: STATUS.request
+      };
+    case constants.SUBMIT_CHALLENGE_SUCCESS:
+      return {
+        response: action.response,
+        status: STATUS.success
+      };
+    case constants.SUBMIT_CHALLENGE_FAILURE:
+      return {
+        status: STATUS.failed
+      };
+    default:
+      return state;
+  }
+};
+
 export const voteChallenge = (state = {}, action) => {
   switch (action.type) {
     case constants.VOTE_CHALLENGE_REQUEST:

@@ -18,7 +18,6 @@ import CreateChallenge from './scenes/CreateChallenge';
 import Login from './scenes/Login';
 import SignUp from './scenes/SignUp';
 import ListChallenges from './scenes/ListChallenges';
-import SubmitChallenge from './scenes/SubmitChallenge';
 import Challenges from './scenes/Challenges';
 import ChallengeDetails from './scenes/ChallengeDetails';
 import Profile from './scenes/Profile';
@@ -86,7 +85,6 @@ function App(props) {
               <Route exact match path="/challenge/create" component={CreateChallenge} />
               <Route exact match path="/challenges" component={Challenges} />
               <Route exact match path="/challenge/list" component={ListChallenges} />
-              <Route exact match path="/challenge/submit/:id" component={SubmitChallenge} />
               <Route path="/challengeDetails/:challengeId" component={ChallengeDetails} />
               <Redirect to="/home" />
             </Switch>

@@ -2,7 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Typography, Input, Button } from '@material-ui/core';
 import { withRouter } from 'react-router';
+// Components
+import Loader from '../../components/Loader';
 // Services and utils
+import { challengeActions } from '../../services/challenges/actions';
 import { uploadsActions } from '../../services/uploads/actions';
 import { STATUS } from '../../services/utils/reducers';
 // Style
@@ -21,24 +24,39 @@ class SubmitChallenge extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // Video upload
     const { uploadVideoResponse } = this.props;
     if (prevProps.uploadVideoResponse.status === STATUS.request && uploadVideoResponse.status !== STATUS.request) {
       if (uploadVideoResponse.status === STATUS.success) {
-        // TODO - Submit challenge with the upload
+        const { challengeId, token } = this.props;
+        const { data } = uploadVideoResponse;
+        this.props.submitChallenge(challengeId, data.location, token);
       } else if (uploadVideoResponse.status === STATUS.failed) {
         window.alert(`Unable to upload your video. ${uploadVideoResponse.error}`);
+      }
+    }
+    // Challenge submission
+    const { submitChallengeResponse } = this.props;
+    if (prevProps.submitChallengeResponse.status === STATUS.request && submitChallengeResponse.status !== STATUS.request) {
+      if (submitChallengeResponse.status === STATUS.success) {
+        this.props.onSuccess();
+      } else if (submitChallengeResponse.status === STATUS.failed) {
+        window.alert(`Unable to submit your challenge with the provided video. ${submitChallengeResponse.error}`);
       }
     }
   }
 
   render() {
+    const { uploadVideoResponse } = this.props;
     return (
       <Grid
         id="submit-challenge-wrapper"
         container
         justify="center"
         alignItems="center"
+        style={{ position: "relative" }}
       >
+        {uploadVideoResponse.status === STATUS.request && <Loader />}
         <div id="upload-video-form-wrapper">
           <div id="description-wrapper">
             <Typography
@@ -46,9 +64,6 @@ class SubmitChallenge extends React.Component {
               color="primary"
             >
               Upload your challenge video
-            </Typography>
-            <Typography id="song-title">
-              Song: {"Song goes here"}
             </Typography>
           </div>
           <form
@@ -99,12 +114,14 @@ class SubmitChallenge extends React.Component {
 function mapStateToProps(state) {
   return {
     token: state.auth.token || "",
-    uploadVideoResponse: state.uploads.postUploads
+    uploadVideoResponse: state.uploads.postUploads,
+    submitChallengeResponse: state.submitChallenge
   }
 }
 
 const mapDispatchToProps = {
-  uploadVideo: uploadsActions.postUploads
+  uploadVideo: uploadsActions.postUploads,
+  submitChallenge: challengeActions.submitChallenge
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SubmitChallenge));

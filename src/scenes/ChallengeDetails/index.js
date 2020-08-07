@@ -1,24 +1,29 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import ReactPlayer from "react-player"
 import {
   Typography,
   Button,
   Grid
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-// Style
-import './style.css';
-import { connect } from 'react-redux';
+// Components
+import Loader from '../../components/Loader';
+import SubmitChallenge from '../SubmitChallenge';
+// Assets
+import voteIcon from './assets/voteIcon.png';
+// Services and utils
 import { challengeActions } from '../../services/challenges/actions';
 import { STATUS } from '../../services/utils/reducers';
-import Loader from '../../components/Loader';
-import ReactPlayer from "react-player"
-import voteIcon from './assets/voteIcon.png';
+// Style
+import './style.css';
 
 class ChallengeDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      challenge: {}
+      challenge: {},
+      uploadingVideo: false
     }
   }
 
@@ -75,10 +80,23 @@ class ChallengeDetails extends React.Component {
           })}
         </ul>
         <Typography color="primary"> Status: {status} </Typography>
+        {this.state.uploadingVideo && (
+          <SubmitChallenge
+            challengeId={this.props.match.params.challengeId}
+            onSuccess={() => {
+              this.setState({ uploadingVideo: false }, () => {
+                const { token } = this.props.auth;
+                if (token !== undefined) {
+                  this.props.getChallenge(this.props.match.params.challengeId, token);
+                }
+              })
+            }}
+          />
+        )}
         <div>
           {submissions.length > 0 ? this.displaySubmissions(challenge) : ""}
         </div>
-        <Link to="/challenge/list" className="link-no-text-decoration" style={{ position: "absolute", right: "50px", bottom: "50px" }}>
+        <Link to="/challenge/list" className="link-no-text-decoration">
           <Button size="small" variant="outlined" color="primary">Go Back</Button>
         </Link>
       </Grid>
@@ -110,7 +128,16 @@ class ChallengeDetails extends React.Component {
     } else if (status === "Accepted") {
       return (
         challenge.acceptedTrackIndex === index ?
-          <Button size="small" color="primary">Upload Video</Button> : "")
+          <Button
+            size="small"
+            color="primary"
+            onClick={(e) => { this.setState({ uploadingVideo: true }) }}
+          >
+            Upload Video
+          </Button>
+          :
+          ""
+      )
     } else {
       return (
         this.props.auth.user._id === challenge.challengedTo._id ?
@@ -120,7 +147,7 @@ class ChallengeDetails extends React.Component {
             onClick={(event) => {
               window.alert("Accepting challenge");
               this.props.acceptChallenge(challenge._id, index, this.props.auth);
-              window.location.reload(false);
+              // window.location.reload(false); This statement was cancelling the acceptChallenge request above so I've commented it out
             }
             }>
             Accept Challenge
@@ -130,7 +157,10 @@ class ChallengeDetails extends React.Component {
   }
 
   getStatus = (challenge) => {
-    if (challenge.submissions.length > 0) {
+    const { submissions } = challenge;
+    const { _id } = this.props.auth.user;
+    const userSubmission = submissions.filter(s => s.author === _id);
+    if (userSubmission.length > 0) {
       return "Submitted";
     } else if (challenge.acceptedAt !== null) {
       return "Accepted";
@@ -140,7 +170,6 @@ class ChallengeDetails extends React.Component {
   }
 
   displaySubmissions = (challenge) => {
-    console.log(challenge);
     let link1 = "";
     let link2 = "";
     if (challenge.submissions.length === 2) {
@@ -165,13 +194,25 @@ class ChallengeDetails extends React.Component {
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
             <Typography color="primary" style={{ alignSelf: "center", paddingTop: "1rem" }}>{`${challenge.challengedBy.firstName} ${challenge.challengedBy.lastName}'s Submission`}</Typography>
-            <ReactPlayer url={link1} className="video" />
+            <video
+              className="video"
+              src={link1}
+              controls
+            >
+              <p>Your browser doesn't support HTML5 video. Here is a <a href={link1}>link to the video</a> instead.</p>
+            </video>
             <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challenger")}></img></Button>
             <Typography style={{ alignSelf: "center" }}>{challengedByVotes}</Typography>
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-center" }}>
             <Typography color="primary" style={{ alignSelf: "center", paddingTop: "1rem" }}>{`${challenge.challengedTo.firstName} ${challenge.challengedTo.lastName}'s Submission`}</Typography>
-            <ReactPlayer url={link2} className="video" />
+            <video
+              className="video"
+              src={link2}
+              controls
+            >
+              <p>Your browser doesn't support HTML5 video. Here is a <a href={link1}>link to the video</a> instead.</p>
+            </video>
             <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challengee")}></img></Button>
             <Typography style={{ alignSelf: "center" }}>{challengedToVotes}</Typography>
           </div>
