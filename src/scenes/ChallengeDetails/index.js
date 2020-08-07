@@ -1,12 +1,10 @@
 import React from 'react';
 import {
   Typography,
-  TextField,
-  MenuItem,
   Button,
   Grid
 } from '@material-ui/core';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // Style
 import './style.css';
 import { connect } from 'react-redux';
@@ -27,7 +25,7 @@ class ChallengeDetails extends React.Component {
   componentDidMount() {
     const { token } = this.props.auth;
     if (token !== undefined) {
-      this.props.getChallenge(this.props.match.params.challengeId,token);
+      this.props.getChallenge(this.props.match.params.challengeId, token);
     }
   }
 
@@ -38,115 +36,115 @@ class ChallengeDetails extends React.Component {
     const challengedAt = challenge.challengedAt;
     const challengedBy = challenge.challengedBy;
     const challengedTo = challenge.challengedTo;
-    const userCreatedChallenge = userId == challengedBy._id;
+    const userCreatedChallenge = userId === challengedBy._id;
     const submissions = challenge.submissions;
     const status = this.getStatus(challenge);
 
-    return ( 
-    <Grid
-      itemProp
-      className="list-challenges-item"
-      xs={12}
-    >
-      <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-      <Typography color="primary" variant="h5" style={{fontWeight:"bold"}}>
-        {userCreatedChallenge ?
-          `You have challenged ${challengedTo.firstName} ${challengedTo.lastName} with these songs options:`
-          :
-          `${challengedBy.firstName} ${challengedBy.lastName} has challenged you with these songs options:`
-        }
-      </Typography>
-      <Typography color="primary">
-        {new Intl.DateTimeFormat("en", {
-          month: "long",
-          day: "2-digit",
-          year: "numeric"
-        }).format(Date.parse(challengedAt))}
-      </Typography>
-      </div>
-      <ul className="track-options-list">
-        {challenge.trackOptions.map((track, index) => {
-          return (
-            <li key={`${track.trackName}`} style={{display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
-              <Typography>
-                {track.artistName} - {track.trackName}
-              </Typography>
-              {this.renderTrackOption(challenge, status, index)}
-            </li>
-          )
-        })}
-      </ul>
-      <Typography color="primary"> Status: {status} </Typography>
-      <div>
-        {submissions.length>0? this.displaySubmissions(challenge) : ""}
-      </div>
-      <Link to="/challenge/list" className="link-no-text-decoration" style={{position:"absolute", right:"50px", bottom:"50px"}}>
-        <Button size="small" variant="outlined" color="primary">Go Back</Button>
-      </Link>
-    </Grid>
+    return (
+      <Grid
+        itemProp
+        className="list-challenges-item"
+        xs={12}
+      >
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+          <Typography color="primary" variant="h5" style={{ fontWeight: "bold" }}>
+            {userCreatedChallenge ?
+              `You have challenged ${challengedTo.firstName} ${challengedTo.lastName} with these songs options:`
+              :
+              `${challengedBy.firstName} ${challengedBy.lastName} has challenged you with these songs options:`
+            }
+          </Typography>
+          <Typography color="primary">
+            {new Intl.DateTimeFormat("en", {
+              month: "long",
+              day: "2-digit",
+              year: "numeric"
+            }).format(Date.parse(challengedAt))}
+          </Typography>
+        </div>
+        <ul className="track-options-list">
+          {challenge.trackOptions.map((track, index) => {
+            return (
+              <li key={`${track.trackName}`} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                <Typography>
+                  {track.artistName} - {track.trackName}
+                </Typography>
+                {this.renderTrackOption(challenge, status, index)}
+              </li>
+            )
+          })}
+        </ul>
+        <Typography color="primary"> Status: {status} </Typography>
+        <div>
+          {submissions.length > 0 ? this.displaySubmissions(challenge) : ""}
+        </div>
+        <Link to="/challenge/list" className="link-no-text-decoration" style={{ position: "absolute", right: "50px", bottom: "50px" }}>
+          <Button size="small" variant="outlined" color="primary">Go Back</Button>
+        </Link>
+      </Grid>
     );
-};
+  };
 
   render() {
     return (
-      this.props.getChallengeResponse.status == STATUS.success ? 
-      <Grid
-        container
-        style={{
-          height: "100%",
-          width: "100%",
-          position: "relative" // For loader to position itself
-        }}
-      >
-        {this.renderChallenge()}
-      </Grid> : <Loader />
+      this.props.getChallengeResponse.status === STATUS.success ?
+        <Grid
+          container
+          style={{
+            height: "100%",
+            width: "100%",
+            position: "relative" // For loader to position itself
+          }}
+        >
+          {this.renderChallenge()}
+        </Grid> : <Loader />
     )
   }
 
   renderTrackOption = (challenge, status, index) => {
-    if (this.props.auth.user._id != challenge.challengedBy._id && this.props.auth.user._id != challenge.challengedTo._id)
+    if (this.props.auth.user._id !== challenge.challengedBy._id && this.props.auth.user._id !== challenge.challengedTo._id)
       return "";
-    if (status == "Submitted"){
-      return (challenge.acceptedTrackIndex == index ? 
+    if (status === "Submitted") {
+      return (challenge.acceptedTrackIndex === index ?
         <Button size="small" color="primary">Submitted</Button> : "");
-    } else if (status == "Accepted") {
+    } else if (status === "Accepted") {
       return (
-      challenge.acceptedTrackIndex == index ? 
-        <Button size="small" color="primary">Upload Video</Button> : "")
+        challenge.acceptedTrackIndex === index ?
+          <Button size="small" color="primary">Upload Video</Button> : "")
     } else {
       return (
-        this.props.auth.user._id == challenge.challengedTo._id ? 
-        <Button 
-          size="small" 
-          color="primary"
-          onClick={(event) => { 
+        this.props.auth.user._id === challenge.challengedTo._id ?
+          <Button
+            size="small"
+            color="primary"
+            onClick={(event) => {
               window.alert("Accepting challenge");
-              this.props.acceptChallenge(challenge._id,index,this.props.auth);
+              this.props.acceptChallenge(challenge._id, index, this.props.auth);
               window.location.reload(false);
             }
-          }> 
-          Accept Challenge 
+            }>
+            Accept Challenge
         </Button> : ""
       )
     }
   }
 
   getStatus = (challenge) => {
-      if (challenge.submissions.length>0) {
-        return "Submitted";
-      } else if (challenge.acceptedAt!=null) {
-        return "Accepted";
-      } else {
-        return "Not Accepted";
-      }
+    if (challenge.submissions.length > 0) {
+      return "Submitted";
+    } else if (challenge.acceptedAt !== null) {
+      return "Accepted";
+    } else {
+      return "Not Accepted";
     }
-      
+  }
+
   displaySubmissions = (challenge) => {
     console.log(challenge);
     let link1 = "";
     let link2 = "";
-    if (challenge.submissions.length == 2) {
-      if (challenge.submissions[0].author == challenge.challengeBy) {
+    if (challenge.submissions.length === 2) {
+      if (challenge.submissions[0].author === challenge.challengeBy) {
         link1 = challenge.submissions[0].submissionUri;
         link2 = challenge.submissions[1].submissionUri;
       } else {
@@ -154,37 +152,37 @@ class ChallengeDetails extends React.Component {
         link2 = challenge.submissions[0].submissionUri;
       }
     } else {
-      if (challenge.submissions[0].author == challenge.challengeBy) 
+      if (challenge.submissions[0].author === challenge.challengeBy)
         link1 = challenge.submissions[0].submissionUri;
-      else 
+      else
         link2 = challenge.submissions[0].submissionUri;
     }
     let challengedByVotes = challenge.votes ? challenge.votes.filter(v => v.for === challenge.challengedBy._id).length : 0;
     let challengedToVotes = challenge.votes ? challenge.votes.filter(v => v.for === challenge.challengedTo._id).length : 0;
 
     return (
-    <div>
-      <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>
-        <div style={{display:"flex", flexDirection:"column", justifyContent:"flex-start"}}> 
-          <Typography color="primary" style={{alignSelf:"center", paddingTop:"1rem"}}>{`${challenge.challengedBy.firstName} ${challenge.challengedBy.lastName}'s Submission`}</Typography>
-          <ReactPlayer url={link1} className="video"/>
-          <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challenger")}></img></Button>
-          <Typography style={{alignSelf:"center"}}>{challengedByVotes}</Typography>
+      <div>
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
+            <Typography color="primary" style={{ alignSelf: "center", paddingTop: "1rem" }}>{`${challenge.challengedBy.firstName} ${challenge.challengedBy.lastName}'s Submission`}</Typography>
+            <ReactPlayer url={link1} className="video" />
+            <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challenger")}></img></Button>
+            <Typography style={{ alignSelf: "center" }}>{challengedByVotes}</Typography>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-center" }}>
+            <Typography color="primary" style={{ alignSelf: "center", paddingTop: "1rem" }}>{`${challenge.challengedTo.firstName} ${challenge.challengedTo.lastName}'s Submission`}</Typography>
+            <ReactPlayer url={link2} className="video" />
+            <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challengee")}></img></Button>
+            <Typography style={{ alignSelf: "center" }}>{challengedToVotes}</Typography>
+          </div>
         </div>
-        <div style={{display:"flex", flexDirection:"column", justifyContent:"flex-center"}}> 
-        <Typography color="primary" style={{alignSelf:"center", paddingTop:"1rem"}}>{`${challenge.challengedTo.firstName} ${challenge.challengedTo.lastName}'s Submission`}</Typography>
-          <ReactPlayer url={link2} className="video"/>  
-          <Button><img src={voteIcon} alt="" className="voteIcon" onClick={() => this.vote(challenge, "challengee")}></img></Button>
-          <Typography style={{alignSelf:"center"}}>{challengedToVotes}</Typography>
-        </div>
-      </div>
-    </div>)
+      </div>)
   }
-      
+
   vote = (challenge, role) => {
     console.log("calling", role);
     let voteFor = challenge.challengedBy._id;
-    if (role == "challengee")
+    if (role === "challengee")
       voteFor = challenge.challengedTo._id;
     this.props.voteChallenge(challenge._id, voteFor, this.props.auth);
     window.location.reload(false);
@@ -204,7 +202,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   getChallenge: challengeActions.getChallenge,
   acceptChallenge: challengeActions.acceptChallenge,
-  voteChallenge:challengeActions.voteChallenge
+  voteChallenge: challengeActions.voteChallenge
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChallengeDetails);
