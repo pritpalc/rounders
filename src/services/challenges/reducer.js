@@ -136,7 +136,8 @@ export const voteChallenge = (state = {}, action) => {
       };
     case constants.VOTE_CHALLENGE_FAILURE:
       return {
-        status: STATUS.failed
+        status: STATUS.failed,
+        error: action.error
       };
     default:
       return state;

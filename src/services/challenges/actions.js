@@ -119,9 +119,9 @@ function voteChallenge(challengeId, userId, token) {
       );
   };
 
-  function request() { return { type: constants.ACCEPT_CHALLENGE_REQUEST } }
-  function success() { return { type: constants.ACCPET_CHALLENGE_SUCCESS } }
-  function failure(error) { return { type: constants.ACCPET_CHALLENGE_FAILURE, error } }
+  function request() { return { type: constants.VOTE_CHALLENGE_REQUEST } }
+  function success() { return { type: constants.VOTE_CHALLENGE_SUCCESS } }
+  function failure(error) { return { type: constants.VOTE_CHALLENGE_FAILURE, error } }
 }
 
 export const challengeActions = {
