@@ -183,10 +183,11 @@ class ChallengeDetails extends React.Component {
   }
 
   displaySubmissions = (challenge) => {
+    console.log(challenge);
     let link1 = "";
     let link2 = "";
     if (challenge.submissions.length === 2) {
-      if (challenge.submissions[0].author === challenge.challengeBy) {
+      if (challenge.submissions[0].author === challenge.challengedBy._id) {
         link1 = challenge.submissions[0].submissionUri;
         link2 = challenge.submissions[1].submissionUri;
       } else {
@@ -194,7 +195,7 @@ class ChallengeDetails extends React.Component {
         link2 = challenge.submissions[0].submissionUri;
       }
     } else {
-      if (challenge.submissions[0].author === challenge.challengeBy)
+      if (challenge.submissions[0].author === challenge.challengedBy._id)
         link1 = challenge.submissions[0].submissionUri;
       else
         link2 = challenge.submissions[0].submissionUri;

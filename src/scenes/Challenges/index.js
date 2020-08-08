@@ -44,6 +44,7 @@ class Challenges extends React.Component {
         const challengedTo = challenge.challengedTo;
         const acceptedAt = challenge.acceptedAt;
         const submissions = challenge.submissions;
+        if (!challengedTo || !challengedBy) return "";
         return (
           <Grid
             item

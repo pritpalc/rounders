@@ -47,6 +47,7 @@ class ListChallenges extends React.Component {
         const acceptedAt = challenge.acceptedAt;
         const submissions = challenge.submissions;
         const userCreatedChallenge = userId === challengedBy._id;
+        if (!challengedTo || !challengedBy) return "";
         return (
           <Grid
             item
