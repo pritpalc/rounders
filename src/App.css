@@ -35,7 +35,6 @@ html * {
 
 #content-wrapper {
   width: 100vw;
-  height: 80vh; /*For child elements to have a parent with a set height*/
   min-height: calc(100vh - var(--app-bar-height));
   display: flex;
   justify-content: center;
