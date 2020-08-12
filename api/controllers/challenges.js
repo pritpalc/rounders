@@ -24,6 +24,18 @@ async function getChallenge(req, res) {
   }
 }
 
+async function getChallengesForUser(req, res) {
+  try {
+    let challenges =
+      await Challenge.find().exec();
+
+    if (!challenges) return res.status(400).send();
+    return res.json({ challenges: challenges });
+  } catch (err) {
+    return res.status(400).send();
+  }
+}
+
 async function postChallenge(req, res) {
   try {
     let challenge = new Challenge({
@@ -40,6 +52,7 @@ async function postChallenge(req, res) {
 
 module.exports = {
   getChallenges: getChallenges,
+  getChallengesForUser: getChallengesForUser,
   getChallenge: getChallenge,
   postChallenge: postChallenge,
 };

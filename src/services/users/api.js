@@ -1,3 +1,9 @@
+import {
+  BASE_API,
+  handleResponse,
+  SESSION_LS_KEY
+} from '../utils/api';
+
 function login(email, password) {
   const requestOptions = {
     method: "POST",
@@ -5,11 +11,11 @@ function login(email, password) {
     body: JSON.stringify({ email, password })
   };
 
-  return fetch(`#`, requestOptions)
+  return fetch(`${BASE_API}/users/auth`, requestOptions)
     .then(handleResponse)
     .then((user) => {
-      localStorage.setItem("user", JSON.stringify(user));
-
+      localStorage.setItem(SESSION_LS_KEY, JSON.stringify(user));
+      console.log(user)
       return user;
     });
 }
@@ -21,33 +27,12 @@ function signup(user) {
     body: JSON.stringify(user)
   };
 
-  return fetch(`#`, requestOptions)
-    .then(handleResponse)
-    .then((user) => {
-      localStorage.setItem("user", JSON.stringify(user));
-
-      return user;
-    });
+  return fetch(`${BASE_API}/users`, requestOptions)
+    .then(handleResponse);
 }
 
 function logout() {
-  localStorage.removeItem("user");
-}
-
-function handleResponse(response) {
-  return response.text().then((text) => {
-    let data;
-    if (!response.ok) {
-      data = text && JSON.parse(text);
-      const error = (data && data.message) || (data && data.meta && data.meta.message) || response.statusText;
-
-      return Promise.reject(error);
-    } else {
-      data = text && JSON.parse(text);
-    }
-
-    return data;
-  });
+  localStorage.removeItem(SESSION_LS_KEY);
 }
 
 export const userServices = {
