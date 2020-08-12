@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // Services
 import { userActions } from '../../services/users/actions';
 // Styles
@@ -14,7 +16,7 @@ class AppBar extends React.Component {
     return (
       <div id="app-bar">
         <Link
-          to={userIsLoggedIn ? "/challenge/list" : "/home"}
+          to={userIsLoggedIn ? "/challenges" : "/home"}
           className="link-no-text-decoration"
         >
           <span id="logo-text">rounders</span>
@@ -24,19 +26,37 @@ class AppBar extends React.Component {
             (
               <React.Fragment>
                 <Link
+                  to="/challenge/create"
+                  className="link"
+                >
+                  <Button
+                    className="button"
+                    variant="contained"
+                    color="primary"
+                  >
+                    New Challenge
+                  </Button>
+                </Link>
+                <Link
                   to="/profile"
                   className="link"
                 >
-                  <Button className="button">
-                    Profile
-                  </Button>
+                  <IconButton
+                    className="button icon"
+                    variant="contained"
+                    color="primary"
+                  >
+                    <AccountCircleIcon />
+                  </IconButton>
                 </Link>
-                <Button
-                  className="button"
+                <IconButton
+                  className="button icon"
                   onClick={() => { this.props.logout() }}
+                  variant="contained"
+                  color="primary"
                 >
-                  Log Out
-                </Button>
+                  <ExitToAppIcon />
+                </IconButton>
               </React.Fragment>
             )
           }

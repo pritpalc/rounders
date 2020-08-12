@@ -2,14 +2,28 @@ import { combineReducers } from 'redux';
 
 import { auth } from './users/reducers/auth';
 import { signup } from './users/reducers/signup';
-import { createChallenge, getChallenges, getChallengesForUser } from './challenges/reducer';
+import uploadsReducer from './uploads/reducers';
+import { getUsers } from './users/reducers/searchUsers';
+import {
+  createChallenge,
+  getChallenges,
+  getMyChallenges,
+  getChallenge,
+  submitChallenge,
+  voteChallenge
+} from './challenges/reducer';
 
 const rootReducer = combineReducers({
   auth,
   signup,
   createChallenge,
   getChallenges,
-  getChallengesForUser
+  getMyChallenges,
+  uploads: uploadsReducer,
+  getChallenge,
+  submitChallenge,
+  voteChallenge,
+  getUsers
 });
 
 export default rootReducer;

@@ -3,11 +3,18 @@
   --footer-height: 56px;
   --song-filter-input-height: 3rem;
   --song-filter-input-width: 500px;
+  --user-filter-input-height: 3rem;
+  --user-filter-input-width: 500px;
   --soft-grey: rgba(0, 0, 0, 0.23);
   --primary: #6202EE;
+  --secondary: #A32F69;
   --soft-primary: rgba(96, 2, 237, 0.62);
   --card-border-radius: 8px;
   --pink: #F64C72;
+}
+
+html * {
+  box-sizing: border-box;
 }
 
 #app-wrapper {
@@ -19,10 +26,16 @@
   box-sizing: border-box;
   min-height: calc(100vh);
   padding-top: var(--app-bar-height);
-  padding-bottom: var(--footer-height);
 }
 
 /* Utils CSS classes */
 .link-no-text-decoration {
   text-decoration: none;
+}
+
+#content-wrapper {
+  width: 100vw;
+  min-height: calc(100vh - var(--app-bar-height));
+  display: flex;
+  justify-content: center;
 }

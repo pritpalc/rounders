@@ -1,26 +1,38 @@
 import { constants } from './constants';
 import { challengeServices } from './api';
 
-function createChallenge(songs, id) {
+function getChallenges(token) {
+  return (dispatch) => {
+    dispatch({ type: constants.CHALLENGES_REQUEST });
+
+    challengeServices.getChallenges(token)
+      .then(response => {
+        dispatch({ type: constants.CHALLENGES_SUCCESS, response });
+      })
+      .catch(error => {
+        dispatch({ type: constants.CHALLENGES_FAILURE, error });
+      });
+  };
+}
+
+function createChallenge(songs, id, token) {
   return (dispatch) => {
     dispatch(request());
 
-    const trackOptions = [
-      {
-          "artistName": songs[0].split(" - ")[0],
-          "trackName": songs[0].split(" - ")[1]
-      },
-      {
-        "artistName": songs[1].split(" - ")[0],
-        "trackName": songs[1].split(" - ")[1]
-      }
-  ]
+    const trackOptions = [];
+    songs.forEach(song => {
+      const tokens = song.split("-");
+      trackOptions.push({
+        artistName: tokens[0],
+        trackName: tokens[1]
+      })
+    });
 
-    challengeServices.createChallenge({ trackOptions: trackOptions, challengedTo: id })
+    challengeServices.createChallenge({ trackOptions, challengedTo: id }, token)
       .then(
         res => {
           dispatch(success(res));
-          dispatch(getChallenges());
+          dispatch(getChallenges(token));
         },
         err => dispatch(failure(err))
       );
@@ -31,12 +43,12 @@ function createChallenge(songs, id) {
   function failure(error) { return { type: constants.CREATE_CHALLENGE_FAILURE, error } }
 }
 
-function getChallenges() {
-  console.log('trigger getchallenges')
+
+function getMyChallenges(token) {
   return (dispatch) => {
     dispatch(request());
 
-    challengeServices.getChallenges()
+    challengeServices.getMyChallenges(token)
       .then(
         res => dispatch(success(res)),
         err => dispatch(failure(err))
@@ -48,27 +60,27 @@ function getChallenges() {
   function failure(error) { return { type: constants.CHALLENGES_FAILURE, error } }
 }
 
-function getChallengesForUser(id) {
+function getChallenge(id, token) {
   return (dispatch) => {
     dispatch(request());
 
-    challengeServices.getChallengesForUser()
+    challengeServices.getChallenge(id, token)
       .then(
         res => dispatch(success(res)),
         err => dispatch(failure(err))
       );
   };
 
-  function request() { return { type: constants.CHALLENGES_REQUEST } }
-  function success(res) { return { type: constants.CHALLENGES_SUCCESS, res } }
-  function failure(error) { return { type: constants.CHALLENGES_FAILURE, error } }
+  function request() { return { type: constants.GET_CHALLENGE_REQUEST } }
+  function success(res) { return { type: constants.GET_CHALLENGE_SUCCESS, res } }
+  function failure(error) { return { type: constants.GET_CHALLENGE_FAILURE, error } }
 }
 
-function acceptChallenge() {
+function acceptChallenge(id, track, token) {
   return (dispatch) => {
     dispatch(request());
 
-    challengeServices.acceptChallenge()
+    challengeServices.acceptChallenge(id, track, token)
       .then(
         () => dispatch(success()),
         err => dispatch(failure(err))
@@ -80,9 +92,44 @@ function acceptChallenge() {
   function failure(error) { return { type: constants.ACCPET_CHALLENGE_FAILURE, error } }
 }
 
+function submitChallenge(id, submissionUri, token) {
+  return (dispatch) => {
+    dispatch(request());
+
+    challengeServices.submitChallenge(id, submissionUri, token)
+      .then(
+        response => dispatch(success(response)),
+        err => dispatch(failure(err))
+      );
+  };
+
+  function request() { return { type: constants.SUBMIT_CHALLENGE_REQUEST } }
+  function success(response) { return { type: constants.SUBMIT_CHALLENGE_SUCCESS, response } }
+  function failure(error) { return { type: constants.SUBMIT_CHALLENGE_FAILURE, error } }
+}
+
+function voteChallenge(challengeId, userId, token) {
+  return (dispatch) => {
+    dispatch(request());
+
+    challengeServices.voteChallenge(challengeId, userId, token)
+      .then(
+        () => dispatch(success()),
+        err => dispatch(failure(err))
+      );
+  };
+
+  function request() { return { type: constants.VOTE_CHALLENGE_REQUEST } }
+  function success() { return { type: constants.VOTE_CHALLENGE_SUCCESS } }
+  function failure(error) { return { type: constants.VOTE_CHALLENGE_FAILURE, error } }
+}
+
 export const challengeActions = {
   createChallenge,
   getChallenges,
-  getChallengesForUser,
-  acceptChallenge
+  getMyChallenges,
+  acceptChallenge,
+  submitChallenge,
+  getChallenge,
+  voteChallenge
 };

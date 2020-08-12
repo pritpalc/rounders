@@ -31,5 +31,15 @@
   color: white !important;
   border: 1px solid white !important;
   margin-left: 1rem;
+  display: flex;
   height: 42px !important;
+}
+
+#buttons-wrapper .button.icon { 
+  width: 42px;
+}
+
+#buttons-wrapper .button.icon:hover { 
+  background-color: white;
+  color: var(--primary) !important;
 }

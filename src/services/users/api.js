@@ -15,7 +15,6 @@ function login(email, password) {
     .then(handleResponse)
     .then((user) => {
       localStorage.setItem(SESSION_LS_KEY, JSON.stringify(user));
-      console.log(user)
       return user;
     });
 }
@@ -35,8 +34,24 @@ function logout() {
   localStorage.removeItem(SESSION_LS_KEY);
 }
 
+function getUsers(user, token) {
+  const requestOptions = {
+    method: "GET",
+    headers: { 
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+     },
+  };
+
+  const query = user
+
+  return fetch(`${BASE_API}/users/search/${query}`, requestOptions)
+    .then(handleResponse);
+}
+
 export const userServices = {
   login,
   signup,
-  logout
+  logout,
+  getUsers
 };
